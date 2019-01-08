@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: smartapp
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+    
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres-replica
+  name: postgres-replica
+  namespace: smartapp
+
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgres-replica
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-replica
+    
+---
