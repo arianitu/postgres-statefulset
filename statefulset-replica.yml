@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-replica
-  namespace: smartapp
 spec:
   updateStrategy:
     type: RollingUpdate

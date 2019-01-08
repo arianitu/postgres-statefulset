@@ -4,7 +4,6 @@ metadata:
   labels:
     app: postgres
   name: postgres
-  namespace: smartapp
 spec:
   type: ClusterIP
   ports:
@@ -23,7 +22,6 @@ metadata:
   labels:
     app: postgres-replica
   name: postgres-replica
-  namespace: smartapp
 
 spec:
   type: ClusterIP
