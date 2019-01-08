@@ -110,10 +110,6 @@ spec:
               subPath: master.conf
               
             - name: postgres-config
-              mountPath: /etc/master.conf
-              subPath: master.conf
-              
-            - name: postgres-config
               mountPath: /etc/pg_hba.conf
               subPath: pg_hba.conf
               
