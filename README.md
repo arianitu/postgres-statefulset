@@ -34,4 +34,4 @@ That's it, you have a full Postgres master + replicating server that's ready to 
 
 I was using Helm to manage Postgres, but they switched to `bitnami/postgresql` instead of the standard `postgres`. Also, upon upgrading, I could not use my existing helm setup to get replication working.
 
-Lately it's been a lot easier to just write my own charts then use others and my hope is to eventually have a bunch of these exampels for production use
+Lately I've realized it's just easier to write my own definitions instead of messing around with Helm charts. 
