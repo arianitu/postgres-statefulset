@@ -30,6 +30,10 @@ If you run `kubectl logs -f postgres-replica-0`, you can see in the logs that it
 
 That's it, you have a full Postgres master + replicating server that's ready to use in production. 
 
+#### Multiple Replicas
+
+You can also set replicas to more than 1 if you want N replicas. 
+
 ### Motivation
 
 I was using Helm to manage Postgres, but they switched to `bitnami/postgresql` instead of the standard `postgres`. Also, upon upgrading, I could not use my existing helm setup to get replication working.
