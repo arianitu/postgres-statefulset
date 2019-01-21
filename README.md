@@ -1,5 +1,5 @@
 # postgres-statefulset
-This is an example of using Kubernetes StatefulSets to get a Postgres instance running with replication enabled. This also uses the [standard Postgres container](https://github.com/docker-library/postgres).
+This is an example of using Kubernetes StatefulSets to get a Postgres instance running with replication enabled. This also uses the [standard Postgres container](https://github.com/docker-library/postgres). Blog article [here](https://stacksoft.io/blog/postgres-statefulset/)
 
 The work here is based off the official documentation here https://wiki.postgresql.org/wiki/Streaming_Replication
 
