@@ -18,6 +18,9 @@ Running this example is easy!
 
 Run `kubectl apply -f statefulset-master.yml` and wait for Master to be running
 
+### Start Master service (IMPORTANT or replica cannot find the master)
+Run `kubectl apply -f service.yml` 
+
 ### Start Replica server
 
 Run `kubectl apply -f statefulset-replica.yml` and wait for Replica to be running
