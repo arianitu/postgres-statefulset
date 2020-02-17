@@ -1,12 +1,11 @@
 # postgres-statefulset
 This is an example of using Kubernetes StatefulSets to get a Postgres instance running with replication enabled. This also uses the [standard Postgres container](https://github.com/docker-library/postgres). Blog article [here](https://stacksoft.io/blog/postgres-statefulset/)
 
-The work here is based off the official documentation here https://wiki.postgresql.org/wiki/Streaming_Replication
+The work here is based off the [official documentation](https://wiki.postgresql.org/wiki/Streaming_Replication)
 
 ## Configuration
 
-1. Edit `config/secret.yml` with the Postgres database password and the replication password 
-2. Run `kubectl apply -f config/secret.yml` and then `cd config && ./create_configmap.sh`
+Edit `kustomization.yml` with the Postgres database password and the replication password
 
 Note, replication password is used to connect to the master and stream updates to the replica. It just needs to be a random password. 
 
@@ -14,16 +13,7 @@ Note, replication password is used to connect to the master and stream updates t
 
 Running this example is easy!
 
-### Start Master servers
-
-Run `kubectl apply -f statefulset-master.yml` and wait for Master to be running
-
-### Start Master service (IMPORTANT or replica cannot find the master)
-Run `kubectl apply -f service.yml` 
-
-### Start Replica server
-
-Run `kubectl apply -f statefulset-replica.yml` and wait for Replica to be running
+Run `kubectl apply -k .`
 
 If you run `kubectl logs -f postgres-replica-0`, you can see in the logs that it starts replication:
 

@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- name: postgres
+  files:
+  - config/postgres.conf
+  - config/master.conf
+  - config/replica.conf
+  - config/pg_hba.conf
+  - config/create-replica-user.sh
+
+secretGenerator:
+- name: postgres
+  literals:
+  - password=master-password
+  - replicaPassword=replica-password
+
+resources:
+ - statefulset-master.yml
+ - service.yml
+ - statefulset-replica.yml
