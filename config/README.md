@@ -24,7 +24,7 @@ Nevertheless, if you wish to go on to build a full set of nodes with High Availa
 
 Multipass/Micok8s uses the Docker Container runtime.
 
-`sudo snap install multipass --beta --classic`
+`sudo snap install multipass
 
 `multipass launch --name master-node --mem 3G --disk 15G`
 
