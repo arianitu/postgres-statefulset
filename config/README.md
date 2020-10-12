@@ -437,7 +437,6 @@ Then, in database-node:
 and recommence from the step labeled 1 above (ie `source venv/bin/activate`).)
 
 
-
 Check nodes are labeled with:
 
 `microk8s kubectl get nodes --show-labels`
