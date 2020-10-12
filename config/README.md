@@ -120,7 +120,9 @@ in each node `mkdir /home/ubuntu/shared`
 
 FROM HOST TERMINAL: clone the repo:
 
-`git clone https://github.com/john-itcsolutions/cheirrs-elastos-db-blockchains.git`
+`git clone https://github.com/john-itcsolutions/postgres-db-elastos-blockchains.git`
+
+As this is forked from Arianitu's github site, the head README.md file applies to building the database only. The README.md for postgres-db-elastos-blockchains had to be placed inside the config folder.
 
 Then:
 
@@ -138,7 +140,7 @@ Then:
 
  IN HOST TERMINAL:
 
-`docker login` (You need to be a collaborator as this is a private repo).
+`docker login` (You need to be a collaborator as johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo).
  
  Now we pull the images we need:
 
