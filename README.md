@@ -11,7 +11,11 @@ The work here is based off the official documentation here https://wiki.postgres
 
 1. Edit `config/secret.yml` with the Postgres database password and the replication password 
 
-Note: Your database's password must match here as well as in "kustomization.yaml". If the kusomization.yaml passwords change, the result of `microk8s kubectl apply -k .` will be different, and your haskell.yml will need to have the key hashes rematched in the text.
+# ITCSA Note: Your database's password must match here as well as in "kustomization.yaml". If the kusomization.yaml passwords change, the result of 
+
+`microk8s kubectl apply -k .`
+
+# will be different, and your haskell.yml will need to have the key hashes rematched in the text. Please refer to config/README.md.
 
 2. Run `kubectl apply -f config/secret.yml` and then `cd config && ./create_configmap.sh`
 
