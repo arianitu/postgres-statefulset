@@ -2,7 +2,7 @@
 
 Array of files with instructions to build backend in this README.md.
 
-To tackle a full Kubernetes installation, ideally you would need a 32 GB RAM; 250 GB SSD; + HDD PC (x32_64). eg an Extreme Gaming Computer.
+# To tackle a full Kubernetes installation, ideally you would need a 32 GB RAM; 250 GB SSD; + HDD PC (x32_64). eg an Extreme Gaming Computer.
 
 We base initial development such as this offline.
 
@@ -16,13 +16,13 @@ The docker-based development on this project is adaptable from the code in:
 
 https://github.com/cyber-republic/elastos-smartweb-service
 
-The database schemas for ITCSA's project are private and available only under certain conditions.
+# The database schemas for ITCSA's project are private and available only under certain conditions.
 
 Development is easiest in Docker as opposed to Kubernetes.
 
 Nevertheless, if you wish to go on to build a full set of nodes with High Availability enabled on Kubernetes, we use Multipass/ Microk8s.
 
-Multipass/Micok8s uses the Docker Container runtime.
+# Multipass/Micok8s uses the Docker Container runtime.
 
 `sudo snap install multipass`
 
@@ -102,9 +102,13 @@ On master-node
 
 When the database-node has joined, repeat for ipfs1-node.
 
-The limit of nodes in a sub-cluster is 3, with one master per sub-cluster, 
+# The limit of nodes in a sub-cluster is 3, with one master per sub-cluster, 
 
-where any node issuing join command with `microk8s add-node` will be treated as a master node. 
+# where any node issuing a join command with
+
+ `microk8s add-node` 
+ 
+ # will be treated as a master node. 
 
 We have 6 nodes so we choose the hive-node as the second master from which we will issue join commands to ipfs2 and carrier. 
 
@@ -114,7 +118,7 @@ Recheck microk8s status on every node.
 
 {`sudo snap remove microk8s`, reinstall, enable add-ons (see above) and join again, in case of microk8s not running.}
 
-If you cannot get the second sub-cluster to run, it is still quite feasible to run only a single 3 node HA-Cluster. 
+# If you cannot get the second sub-cluster to run, it is still quite feasible to run only a single 3 node HA-Cluster. 
 
 Leave out ipfs2 (or ipfs1), Hive and Carrier if necessary. If you want HA, you need 3 nodes running and joined.
 
@@ -134,7 +138,7 @@ FROM HOST TERMINAL: clone the repo:
 
 `git clone https://github.com/john-itcsolutions/postgres-db-elastos-blockchains.git`
 
-As this is forked from Arianitu's github site, the head README.md file applies to building the database only. The README.md for postgres-db-elastos-blockchains had to be placed inside the config folder.
+# As this is forked from Arianitu's github site, the head README.md file applies to building the database only. The README.md for postgres-db-elastos-blockchains had to be placed inside the config folder.
 
 Then:
 
@@ -152,7 +156,9 @@ Then:
 
  IN HOST TERMINAL:
 
-`docker login` (You need to be a collaborator as johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo).
+`docker login` 
+
+# (You need to be a collaborator as johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo).
  
  Now we pull the images we need:
 
@@ -171,7 +177,7 @@ Then:
  You need to have something like:
  
 `{
-  insecure-registries : [10.184.36.93:32000,
+  insecure-registries : [10.184.36.93:32000, \
                            10.184.36.143:32000]
 }`
 
@@ -189,7 +195,7 @@ Then:
 
 `docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
 
-Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
+# Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
 
 `docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
@@ -287,7 +293,7 @@ If errors or excessive delay get messages with:
 
  (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
- To obtain external access:
+ In order to obtain external access:
  
  `microk8s kubectl apply -f ingress.yml`
  
@@ -297,7 +303,7 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl cp reset_database.sql postgres-0:/var/lib/postgresql/data/`
 
-The following 3 commands will be possible only after you are positively identified, gain our trust, and sign an agreement in order to obtain these backup files.
+# The following 3 commands will be possible only after you are positively identified, gain our trust, and sign an agreement in order to obtain these backup files.
 
 `microk8s kubectl cp ../cheirrs_backup.sql postgres-0:/var/lib/postgresql/data/`
 
@@ -407,7 +413,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 8. `virtualenv -p ``which python3`` venv`
 
-NOTE: There should be single backticks around which python3!
+## NOTE: There should be SINGLE backticks around `which python3` ! ##
 
 9. `source venv/bin/activate`
 
@@ -436,9 +442,9 @@ Now db and blockchains are running and connected.
 
 At this stage we need to discover how to issue requests to blockchain grpc server and haskell webserver.
 
-Please help!
+## Please help! ##
 
-Also note that if blockchains fall over you simply return to master node and 
+(Also note that if blockchains fall over you simply return to master node and 
 
 `microk8s kubectl get pods` and copy id of "elastos" blockchains pod.
 
@@ -446,7 +452,9 @@ Then, in database-node:
 
 `microk8s kubectl exec -it elastos-abcdefg123-vcxzs32 -- bash`
 
-and recommence from the step labeled 4 above (ie `pip3 install virtualenv`).
+and recommence from the step labeled 4 above (ie `pip3 install virtualenv`).)
+
+
 
 Check nodes are labeled with:
 
@@ -457,7 +465,7 @@ If not:
 `microk8s kubectl label nodes hive-node nodetype=hive-node`, etc, etc
 
 
-For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
+For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the sub-cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to the master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
 
 You will need to run `microk8s add-node` on hive-node to join the carrier and ipfs2 nodes, making a second sub-cluster.
 
@@ -492,4 +500,4 @@ For carrier compilation and installation please follow:
 https://github.com/elastos/Elastos.NET.Carrier.Native.SDK#2-install-pre-requirements
 
 
-The methods for connecting the Hive node to the IPFS system are so far a mystery to us!
+## The methods for connecting the Hive node to the IPFS system are so far a mystery to us! ##
