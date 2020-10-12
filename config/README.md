@@ -175,7 +175,7 @@ Then:
                            10.184.36.143:32000]
 }`
 
-where the 2 Ip Addresses must match your master-node and hive-node addresses.
+where the 2 Ip Addresses must match your master-node and hive-node addresses. (Use `multipass list` on the host)
 
 Then:
 
