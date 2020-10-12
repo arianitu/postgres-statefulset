@@ -10,7 +10,15 @@ You need to develop on docker. ITCSA uses Ubuntu 20.04. https://docs.docker.com/
 
 Remember to sudo `usermod -aG docker $USER && newgrp docker` after install is complete.
 
-To go on to build a full set of nodes with High Availability enabled on Kubernetes, we use Multipass/ Microk8s.
+The docker-based development on this project is adaptable from the code in:
+
+https://github.com/cyber-republic/elastos-smartweb-service
+
+The database schemas for ITCSA's project are private and available only under conditions.
+
+Development is easiest in Docker as opposed to Kubernetes.
+
+Nevertheless, if you wish to go on to build a full set of nodes with High Availability enabled on Kubernetes, we use Multipass/ Microk8s.
 
 `sudo snap install multipass --beta --classic`
 
