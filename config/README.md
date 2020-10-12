@@ -275,6 +275,10 @@ If errors or excessive delay get messages with:
 
  (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
+ To obtain external access:
+ 
+ `microk8s kubectl apply -f ingress.yml`
+ 
 `microk8s kubectl cp create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
 `microk8s kubectl cp insert_rows_scripts.sql postgres-0:/var/lib/postgresql/data/`
