@@ -175,6 +175,8 @@ Then:
 
 `docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
 
+Note in following, jhomitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
+
 `docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
 `docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
@@ -276,6 +278,8 @@ If errors or excessive delay get messages with:
 `microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/insert_rows_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
 `microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/reset_database.sql postgres-0:/var/lib/postgresql/data/`
+
+The following 3 commands will be possible only after signing an agreement and gaining our trust, in order to obtain these backup files.
 
 `microk8s kubectl cp ../cheirrs_backup.sql postgres-0:/var/lib/postgresql/data/`
 
