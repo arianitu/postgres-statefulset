@@ -168,7 +168,7 @@ Then:
 
  `docker pull postgrest/postgrest`
 
- `docker pull johnitcsolutionscomau/ubuntu_elastos_smartweb-base` 
+ `docker pull johnitcsolutionscomau/elastos:1` 
  
  Issue `multipass list` from host and note Ip Address of both the master-node and (if following with second sub-cluster) hive-node.
  
@@ -195,11 +195,11 @@ Then:
 
 `docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
 
-# Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
+# Note in following, johnitcsolutionscomau/elastos is a private repo. You will need to be a collaborator to see it.
 
-`docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
+`docker tag johnitcsolutionscomau/elastos:1 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
 
-`docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
+`docker tag johnitcsolutionscomau/elastos:1 10.184.36.143:32000/johnitcsolutionscomau/elastos:1`
 
 `docker push 10.184.36.93:32000/redis:5.0.4`
 
@@ -207,9 +207,9 @@ Then:
 
 `docker push 10.184.36.93:32000/postgrest/postgrest:registry`
 
-`docker push 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
+`docker push 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
 
-`docker push 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
+`docker push 10.184.36.143:32000/johnitcsolutionscomau/elastos:1`
 
 (Remember to change the above Ip Addresses to match your own node addresses for master and hive nodes!)
 
@@ -387,7 +387,7 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 `microk8s kubectl describe pods`,
 
-and editing pg_hba.conf to include these addresses with /24 as the CDR, and trust basis.
+and editing pg_hba.conf to include these addresses with /24 as the CDR, and on trust basis.
 
 
 
@@ -407,47 +407,17 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 `cd elastos-smartweb-service`
 
-1. `apt-get install python3-dev`
+1. `source venv/bin/activate`
 
-2. `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py`
-
-3. `python3 get-pip.py`
-
-4. `pip3 install virtualenv`
-
-5. `add-apt-repository ppa:ethereum/ethereum`
-
-6. `apt-get update`
-
-7. `apt-get install solc`
-
-8. `virtualenv -p ``which python3`` venv`
-
-## NOTE: There should be SINGLE backticks around `which python3` ! ##
-
-9. `source venv/bin/activate`
-
-10. `pip3 install -r requirements.txt`
-
-11. `export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
-
-12. `cp .env.example .env`
-
-13. `apk add nano`
-
-14. `nano .env`
-
-change host to postgres, port to 5432 and database to general.
-
-ctl-O > Enter > ctrl-X to save and exit.
+2. `export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
 
 Still in postgres-0 container on database-node in elastos-smartweb-service directory:
 
 The following should start the blockchain connections
 
-`python3 grpc_adenine/server.py`
+3. `python3 grpc_adenine/server.py`
 
-Now db and blockchains are running and connected.
+Now the postgres db and elastos blockchains are running and connected.
 
 
 At this stage we need to discover how to issue requests to blockchain grpc server and haskell webserver.
@@ -462,7 +432,7 @@ Then, in database-node:
 
 `microk8s kubectl exec -it elastos-abcdefg123-vcxzs32 -- bash`
 
-and recommence from the step labeled 4 above (ie `pip3 install virtualenv`).)
+and recommence from the step labeled 1 above (ie `source venv/bin/activate`).)
 
 
 
