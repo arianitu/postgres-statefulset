@@ -197,7 +197,7 @@ docker push 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-ba
 
 Now in database-node:
 
-`cd /home/ubuntu/shared/path/to/cheirrs-elastos-db-blockchains/postgres-statefulset`
+`cd /home/ubuntu/shared/path/to/postgres-db-elastos-blockchains`
 
 Run `microk8s kubectl apply -f config/secret.yml` and then `cd config && ./create_configmap.sh`    
 
@@ -273,7 +273,7 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl apply -f haskell.yml`
 
- (This is the webserver to be used in palce of unprogrammed Redis Servers).
+ (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
 `microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
