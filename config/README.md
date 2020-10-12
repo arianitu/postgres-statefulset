@@ -436,6 +436,15 @@ At this stage we need to discover how to issue requests to blockchain grpc serve
 
 Please help!
 
+Also note that if blockchains fall over you simply return to master node and 
+
+`microk8s kubectl get pods` and copy id of "elastos" blockchains pod.
+
+Then, in database-node: 
+
+`microk8s kubectl exec -it elastos-abcdefg123-vcxzs32 -- bash`
+
+and recommence from the step labeled 4 above (ie `pip3 install virtualenv`).
 
 Check nodes are labeled with:
 
