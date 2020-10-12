@@ -158,7 +158,7 @@ Then:
 
 `docker login` 
 
-# (You need to be a collaborator as johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo).
+# (You need to be a collaborator, as "johnitcsolutionscomau/elastos" is a private repo).
  
  Now we pull the images we need:
 
