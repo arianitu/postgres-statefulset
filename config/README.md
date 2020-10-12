@@ -2,7 +2,7 @@
 
 Array of files with instructions to build backend in this README.md.
 
-# To tackle a full Kubernetes installation, ideally you would need a 32 GB RAM; 250 GB SSD; + HDD PC (x32_64). eg an Extreme Gaming Computer.
+# To tackle a full Kubernetes installation, ideally you would need a 32 GB RAM; 250 GB SSD; + HDD: PC (x86_64). eg an Extreme Gaming Computer.
 
 We base initial development such as this offline.
 
