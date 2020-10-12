@@ -8,7 +8,7 @@ We base initial development such as this offline.
 
 You need to develop on docker. ITCSA uses Ubuntu 20.04. https://docs.docker.com/engine/install/ubuntu/
 
-Remember to sudo `usermod -aG docker $USER && newgrp docker` after install is complete.
+Remember to `sudo usermod -aG docker $USER && newgrp docker` after install is complete.
 
 The docker-based development on this project is adaptable from the code in:
 
