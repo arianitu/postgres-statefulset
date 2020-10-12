@@ -126,17 +126,17 @@ As this is forked from Arianitu's github site, the head README.md file applies t
 
 Then:
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains master-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains  master-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains database-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains database-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains ipfs1-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains ipfs1-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains ipfs2-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains ipfs2-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains hive-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains hive-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/cheirrs-elastos-db-blockchains carrier-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains  carrier-node:/home/ubuntu/shared`
 
  IN HOST TERMINAL:
 
@@ -315,7 +315,7 @@ Create users in postgres:
 
 `create role a_horse_admin with superuser login password 'Buddha10';`     
 
-Check Schemas: there should be 'public, 'a_horse'; 'cheirrs'; 'cheirrs_oseer.
+Check Schemas: there should be 'public, 'a_horse'; 'cheirrs'; 'cheirrs_oseer'.
 
 `\dn`
 
@@ -361,17 +361,17 @@ You should see the single user's details.
 
 Now switch to the second database-node terminal:
 
-`cd shared/postgres-statefulset`
+`cd shared/postgres-db-elastos-blockchains `
 
 `microk8s kubectl apply -f elastos-smartweb.yml`
 
 (Track on master-node with watch microk8s kubectl get pods)
 
-When node is up and ready, copy id of pod to clipboard from master node, and replace below:
+When node is up and ready, copy id of pod to clipboard from master node (`watch microk8s kubectl get pods`), and replace below:
 
 `microk8s kubectl exec -it elastos-abcd1234-uvw542xy -- bash`
 
-You are now inside the elastos-smartweb container from which we will be running the blockchains on a pytho-based grpc server.
+You are now inside the elastos-smartweb container from which we will be running the blockchains on a python-based grpc server.
 
 `cd elastos-smartweb-service`
 
@@ -389,7 +389,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 7. `apt-get install solc`
 
-8. `virtualenv -p ``which python3`` venv`
+8. `virtualenv -p \`which python3\` venv`
 
 NOTE: There should be single backticks around which python3!
 
