@@ -445,7 +445,7 @@ Please note that in the following all the compiling and installing needs to happ
 
 So, before starting to follow any instructions make sure you are inside the relevant pod (whose id you obtain by inspecting `watch microk8s kubectl get pods`) by running:
 
-`microk8s kubectl exec -it ipfs1-6d4ccbdd56-bqbkc`  -- please replace ipfs1 id with your own value.
+`microk8s kubectl exec -it ipfs1-6d4ccbdd56-bqbkc -- bash`  -- please replace ipfs1 id with your own value.
 
 You should ignore the presence of the elastos-smartweb-service folder inside the container, as this is there for convenience only in the other case.
 
