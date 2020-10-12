@@ -221,7 +221,11 @@ Run `microk8s kubectl apply -f config/secret.yml` and then `cd config && ./creat
 
 `cd ../`
 
+Generate further secrets from kustomization file:
+
 `microk8s kubectl apply -k .`
+
+Create places for persistent volumes on database-node and allow access:
 
 `sudo mkdir -p /mnt/disk/pgdata`
 
@@ -259,7 +263,7 @@ Run `microk8s kubectl apply -f config/secret.yml` and then `cd config && ./creat
 
 `sudo chmod 777 /mnt/disk/data-cheirrs-oseer`
 
-Still in database-node:
+Still in database-node, start master postgres server:
 
 `microk8s kubectl apply -f statefulset-master.yml`
 
@@ -273,7 +277,7 @@ If errors or excessive delay get messages with:
 
  .. fix errors!
  
- In database-node:
+ In database-node, after master is successfully running and ready, start replica server:
 
 `microk8s kubectl apply -f statefulset-replica.yml`
  
@@ -293,7 +297,7 @@ If errors or excessive delay get messages with:
 
  (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
- In order to obtain external access (eg. from host):
+ In order to obtain external access to system (eg. from host):
  
  `microk8s kubectl apply -f ingress.yml`
  
