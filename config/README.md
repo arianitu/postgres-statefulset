@@ -441,6 +441,16 @@ You will need to run `microk8s add-node` on hive-node to join the carrier and ip
 
 Now the elastos/ubuntu containers are running with sleep time of 10,000 seconds during which you can complete server setups and start ipfs, hive and carrier nodes (after compiling on the nodes).
 
+Please note that in the following all the compiling and installing needs to happen inside the containers.
+
+So, before starting to follow any instructions make sure you are inside the relevant pod (whose id you obtain by inspecting `watch microk8s kubectl get pods`) by running:
+
+`microk8s kubectl exec -it ipfs1-6d4ccbdd56-bqbkc`  -- please replace ipfs1 id with your own value.
+
+You should ignore the presence of the elastos-smartweb-service folder inside the container, as this is there for convenience only in the other case.
+
+Similar commands should be issued before installing Hive and Carrier, so they are installed inside pods, not directly onto a node.
+
 Hive is the Elastos file storage system and relies on IPFS nodes to function. You require at least 2 ipfs nodes to obtain a private network which is consensus-capable.
 
 For ipfs compilation and installation please follow:
@@ -458,3 +468,6 @@ The carrier network is the secure communications system developed by Rong Chen a
 For carrier compilation and installation please follow:
 
 https://github.com/elastos/Elastos.NET.Carrier.Native.SDK#2-install-pre-requirements
+
+
+The methods for connecting the Hive node to the IPFS system is so far a mystery to us!
