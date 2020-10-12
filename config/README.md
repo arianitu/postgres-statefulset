@@ -6,7 +6,9 @@ Array of files with instructions to build backend in this README.md.
 
 We base initial development such as this offline.
 
-You need to develop on docker. ITCSA uses Ubuntu 20.04. 
+You need to develop on docker. ITCSA uses Ubuntu 20.04.
+
+See our website at https://www.itcsolutions.com.au/kubernetes-yaml-file-example/ for an older but more visual idea.
 
 Get Docker for Ubuntu: https://docs.docker.com/engine/install/ubuntu/
 
