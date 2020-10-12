@@ -389,7 +389,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 7. `apt-get install solc`
 
-8. `virtualenv -p \`which python3\` venv`
+8. `virtualenv -p ``which python3`` venv`
 
 NOTE: There should be single backticks around which python3!
 
