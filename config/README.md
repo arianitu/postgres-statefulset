@@ -20,6 +20,8 @@ Development is easiest in Docker as opposed to Kubernetes.
 
 Nevertheless, if you wish to go on to build a full set of nodes with High Availability enabled on Kubernetes, we use Multipass/ Microk8s.
 
+Multipass/Micok8s uses the Docker Container runtime.
+
 `sudo snap install multipass --beta --classic`
 
 `multipass launch --name master-node --mem 3G --disk 15G`
