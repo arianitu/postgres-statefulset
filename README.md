@@ -11,7 +11,7 @@ The work here is based off the official documentation here https://wiki.postgres
 
 1. Edit `config/secret.yml` with the Postgres database password and the replication password 
 
-# ITCSA Note: Your database's password must match here as well as in "kustomization.yaml". If the kusomization.yaml passwords change, the result of 
+# ITCSA Note: Your database's password must match here as well as in "kustomization.yaml". If the kustomization.yaml passwords change, the result of 
 
 `microk8s kubectl apply -k .`
 
