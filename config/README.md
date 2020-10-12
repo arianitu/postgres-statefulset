@@ -134,17 +134,17 @@ As this is forked from Arianitu's github site, the head README.md file applies t
 
 Then:
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains  master-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains  master-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains database-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains database-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains ipfs1-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains ipfs1-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains ipfs2-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains ipfs2-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains hive-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains hive-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/john-itcsolutions/postgres-db-elastos-blockchains  carrier-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains  carrier-node:/home/ubuntu/shared`
 
  IN HOST TERMINAL:
 
