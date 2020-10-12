@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-a-horse
+  labels:
+    app: redis-a-horse
+spec:
+  type: LoadBalancer
+  selector:
+    app: redis-a-horse
+  ports:
+  - name: red-a-horse
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-a-horse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-a-horse
+  template:
+    metadata:
+      labels:
+        app: redis-a-horse
+    spec:
+      containers:
+      - name: redis-a-horse
+        image: localhost:32000/redis:5.0.4
+        env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          - name: POSTGRES_HOST
+            value: postgres
+          - name: POSTGRES_PORT
+            value: "postgres"
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: database
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: password
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.1"
+        volumeMounts:
+        - mountPath: /redis-master-data
+          name: data-a-horse
+        - mountPath: /redis-master
+          name: config-a-horse
+      volumes:
+        - name: data-a-horse
+          persistentVolumeClaim:
+            claimName: redis-a-horse-claim
+        - name: config-a-horse
+          persistentVolumeClaim:
+            claimName: config-a-horse-claim
+      nodeSelector:
+        nodetype: database-node

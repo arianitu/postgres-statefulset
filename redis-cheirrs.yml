@@ -1,0 +1,299 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-cheirrs
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 1.003Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/data-cheirrs"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-cheirrs-oseer
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 1.002Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/data-cheirrs-oseer"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-a-horse
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: .997Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/data-a-horse"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: config-cheirrs
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 53Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/config-cheirrs"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: config-cheirrs-oseer
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 52Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/config-cheirrs-oseer"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: config-a-horse
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 47Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/config-a-horse"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cheirrs
+  labels:
+    app: redis-cheirrs
+spec:
+  type: LoadBalancer
+  selector:
+    app: redis-cheirrs
+  ports:
+  - name: red-chrs
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-cheirrs-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1.003Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-cheirrs-oseer-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1.002Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-a-horse-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: .997Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-cheirrs-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 53Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-cheirrs-oseer-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 52Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-a-horse-claim
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 47Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cheirrs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cheirrs
+  template:
+    metadata:
+      labels:
+        app: redis-cheirrs
+    spec:
+      containers:
+      - name: redis-cheirrs
+        image: localhost:32000/redis:5.0.4
+        env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          - name: CONFIG_FILE
+            value: /redis-master/redis.conf
+          - name: POSTGRES_HOST
+            value: postgres
+          - name: POSTGRES_PORT
+            value: "postgres"
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: database
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: password
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.1"
+        volumeMounts:
+        - mountPath: /redis-master-data
+          name: data-cheirrs
+        - mountPath: /redis-master
+          name: config-cheirrs
+      volumes:
+        - name: data-cheirrs
+          persistentVolumeClaim:
+            claimName: redis-cheirrs-claim
+        - name: config-cheirrs
+          persistentVolumeClaim:
+            claimName: config-cheirrs-claim
+      nodeSelector:
+        nodetype: database-node

@@ -1,0 +1,79 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: general-ingress
+  annotations:
+    kubernetes.io/ambassador: /
+spec:
+  defaultBackend:
+    service:
+      name: elastos
+      port:
+        number: 8001
+  rules:
+  - host: "database-node"
+  - http:
+      paths:
+      - path: /elastos:8001
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 8001
+      - path: /haskell:webserve-http
+        pathType: Prefix
+        backend:
+          service:
+            name: haskell
+            port:
+              number: 3000
+      - path: /redis-cheirrs:red-chrs
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-cheirrs
+            port:
+              number: 6379
+      - path: /redis-cheirrs-oseer:red-chr-os
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-cheirrs-oseer
+            port:
+              number: 6379
+      - path: /redis-chubbamorris:red-chubba
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-chubbamorris
+            port:
+              number: 6379
+      - path: /redis-chubbamorris-oseer:red-chub-os
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-chubbamorris-oseer
+            port:
+              number: 6379
+      - path: /redis-convey-it:red-conv-it
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-convey-it
+            port:
+              number: 6379
+      - path: /redis-convey-it-oseer:red-cv-it-os
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-convey-it-oseer
+            port:
+              number: 6379
+      - path: /redis-a-horse:red-a-horse
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-a-horse
+            port:
+              number: 6379

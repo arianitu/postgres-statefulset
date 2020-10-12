@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ipfs2
+  labels:
+    app: ipfs2
+spec:
+  type: LoadBalancer
+  selector:
+    app: ipfs2
+  ports:
+  - name: ipfs2
+    protocol: TCP
+    port: 8009
+    targetPort: 8009
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ipfs2
+spec:
+  selector:
+    matchLabels:
+      app: ipfs2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ipfs2
+    spec:
+      containers:
+      - name: ipfs2
+        image: localhost:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1
+        command: ["/bin/bash"]
+        args: ["-c", "while true; do echo hello; sleep 10000;done"]
+        ports:
+        - containerPort: 8009
+      nodeSelector:
+        nodetype: ipfs2-node

@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carrier
+  labels:
+    app: carrier
+spec:
+  type: LoadBalancer
+  selector:
+    app: carrier
+  ports:
+  - name: carrier
+    protocol: TCP
+    port: 8011
+    targetPort: 8011
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carrier
+spec:
+  selector:
+    matchLabels:
+      app: carrier
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: carrier
+    spec:
+      containers:
+      - name: carrier
+        image: localhost:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1
+        command: ["/bin/bash"]
+        args: ["-c", "while true; do echo hello; sleep 10000;done"]
+        ports:
+        - containerPort: 8011
+      nodeSelector:
+        nodetype: carrier-node

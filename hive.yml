@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hive
+  labels:
+    app: hive
+spec:
+  type: LoadBalancer
+  selector:
+    app: hive
+  ports:
+  - name: hive
+    protocol: TCP
+    port: 8008
+    targetPort: 8008
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hive
+spec:
+  selector:
+    matchLabels:
+      app: hive
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hive
+    spec:
+      containers:
+      - name: hive
+        image: localhost:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1
+        command: ["/bin/bash"]
+        args: ["-c", "while true; do echo hello; sleep 10000;done"]
+        ports:
+        - containerPort: 8008
+      nodeSelector:
+        nodetype: hive-node

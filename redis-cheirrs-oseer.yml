@@ -1,0 +1,77 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cheirrs-oseer
+  labels:
+    app: redis-cheirrs-oseer
+spec:
+  type: LoadBalancer
+  selector:
+    app: redis-cheirrs-oseer
+  ports:
+  - name: red-chr-os
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cheirrs-oseer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-cheirrs-oseer
+  template:
+    metadata:
+      labels:
+        app: redis-cheirrs-oseer
+    spec:
+      containers:
+      - name: redis-cheirrs-oseer
+        image: localhost:32000/redis:5.0.4
+        env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          - name: CONFIG_FILE
+            value: /redis-master/redis.conf
+          - name: POSTGRES_HOST
+            value: postgres
+          - name: POSTGRES_PORT
+            value: "postgres"
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: database
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: itcsa-postgres-key-9t6f84kgg5
+                key: password
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.1"
+        volumeMounts:
+        - mountPath: /redis-master-data
+          name: data-cheirrs-oseer
+        - mountPath: /redis-master
+          name: config-cheirrs-oseer
+      volumes:
+        - name: data-cheirrs-oseer
+          persistentVolumeClaim:
+            claimName: redis-cheirrs-oseer-claim
+        - name: config-cheirrs-oseer
+          persistentVolumeClaim:
+            claimName: config-cheirrs-oseer-claim
+      nodeSelector:
+        nodetype: database-node

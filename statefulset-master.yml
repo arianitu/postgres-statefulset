@@ -1,3 +1,90 @@
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: standard
+provisioner: k8s.io/microk8s-hostpath
+parameters:
+  type: pd-ssd
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/pgdata"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-config3
+  labels:
+    type: local
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 56Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/postgres-config3"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres 
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-config-claim3
+spec:
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 56Mi
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -18,7 +105,7 @@ spec:
         app: postgres 
     spec:
       volumes:
-        - name: postgres-config
+        - name: postgres-config3
           configMap:
             name: postgres
             
@@ -26,7 +113,7 @@ spec:
 
       containers:
         - name: postgres
-          image: postgres:10.5
+          image: localhost:32000/postgres:10.14
           args: ['-c', 'config_file=/etc/postgres.conf', '-c', 'hba_file=/etc/pg_hba.conf']
           
           imagePullPolicy: IfNotPresent
@@ -101,22 +188,23 @@ spec:
               name: postgres
               subPath: postgres-db
               
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /etc/postgres.conf
               subPath: postgres.conf
               
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /etc/master.conf
               subPath: master.conf
               
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /etc/pg_hba.conf
               subPath: pg_hba.conf
               
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /docker-entrypoint-initdb.d/create-replica-user.sh
               subPath: create-replica-user.sh
-          
+      nodeSelector:
+        nodetype: database-node          
   volumeClaimTemplates:
   - metadata:
       name: postgres

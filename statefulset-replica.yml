@@ -1,3 +1,45 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-replica2
+  labels:
+    type: local
+spec:
+  storageClassName: "ssd"
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/disk/pgdata-replica2"
+  nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            -  "database-node"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres-replica
+  name: postgres-replica
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgres-replica
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-replica
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -18,7 +60,7 @@ spec:
         app: postgres-replica 
     spec:
       volumes:
-        - name: postgres-config
+        - name: postgres-config3
           configMap:
             name: postgres
             
@@ -26,7 +68,7 @@ spec:
       
       initContainers:
         - name: setup-replica-data-directory
-          image: postgres:10.5
+          image: localhost:32000/postgres:10.14
           
           env:
             - name: PGPASSWORD
@@ -49,12 +91,12 @@ spec:
 
           volumeMounts:
             - mountPath: /var/lib/postgresql/data/pgdata
-              name: postgres-replica
+              name: postgres-replica2
               subPath: postgres-db
 
       containers:
         - name: postgres-replica
-          image: postgres:10.5
+          image: localhost:32000/postgres:10.14
           args: ['-c', 'config_file=/etc/postgres.conf']
           
           imagePullPolicy: IfNotPresent
@@ -120,22 +162,21 @@ spec:
 
           volumeMounts:
             - mountPath: /var/lib/postgresql/data/pgdata
-              name: postgres-replica
+              name: postgres-replica2
               subPath: postgres-db
             
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /etc/postgres.conf
               subPath: postgres.conf
 
-            - name: postgres-config
+            - name: postgres-config3
               mountPath: /etc/replica.conf
               subPath: replica.conf
-            
-      
-          
+      nodeSelector:
+        nodetype: database-node       
   volumeClaimTemplates:
   - metadata:
-      name: postgres-replica
+      name: postgres-replica2
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "ssd"

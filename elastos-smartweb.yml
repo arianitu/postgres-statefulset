@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastos
+  labels:
+    app: elastos
+spec:
+  type: LoadBalancer
+  selector:
+    app: elastos
+  ports:
+  - name: elastos
+    protocol: TCP
+    port: 8001
+    targetPort: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastos
+spec:
+  selector:
+    matchLabels:
+      app: elastos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elastos
+    spec:
+      containers:
+      - name: elastos
+        image: localhost:32000/elastos:1
+        command: ["/bin/bash"]
+        args: ["-c", "while true; do echo hello; sleep 10000;done"]
+        ports:
+        - containerPort: 8001
+      nodeSelector:
+        nodetype: database-node
