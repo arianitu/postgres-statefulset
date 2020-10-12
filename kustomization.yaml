@@ -9,7 +9,7 @@ secretGenerator:
 - name: itcsa-haskell-key
   literals:
   - db-uri="postgres://postgres:passwd@postgres:postgres/general
-  - db-schema="public, a_horse, cheirrs, cheirrs_oseer, chubbamorris, chubbamorris_oseer, convey_it, convey_it_oseer"
+  - db-schema="public, a_horse, cheirrs, cheirrs_oseer"
   - db-anon-role=postgres
 
 
