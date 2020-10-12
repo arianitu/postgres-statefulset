@@ -199,7 +199,7 @@ Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a priva
 
 `docker push 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
-`docker push 10.184.36.143:32000/johnitcsolutionscomau/ubun`tu_elastos_smartweb-base:1`
+`docker push 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
 (Remember to change the above Ip Addresses to match your own node addresses for master and hive nodes!)
 
