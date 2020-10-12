@@ -199,7 +199,7 @@ Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a priva
 
 `docker push 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
-docker push 10.184.36.143:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
+`docker push 10.184.36.143:32000/johnitcsolutionscomau/ubun`tu_elastos_smartweb-base:1`
 
 (Remember to change the above Ip Addresses to match your own node addresses for master and hive nodes!)
 
@@ -395,7 +395,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 4. `pip3 install virtualenv`
 
-5. `'add-apt-repository ppa:ethereum/ethereum`
+5. 'add-apt-repository ppa:ethereum/ethereum`
 
 6. `apt-get update`
 
@@ -441,7 +441,7 @@ Check nodes are labeled with:
 
 If not:
 
-`microk8s kubectl label nodes hive-node nodetype=hive-node', etc, etc
+`microk8s kubectl label nodes hive-node nodetype=hive-node`, etc, etc
 
 
 For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
