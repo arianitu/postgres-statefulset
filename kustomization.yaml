@@ -2,13 +2,13 @@ secretGenerator:
 - name: itcsa-postgres-key
   literals:
   - username=postgres
-  - password=Buddha10
+  - password=passwd
   - database=general
-  - replicaPassword=Buddha10
+  - replicaPassword=passwd
 
 - name: itcsa-haskell-key
   literals:
-  - db-uri="postgres://postgres:Buddha10@postgres:postgres/general
+  - db-uri="postgres://postgres:passwd@postgres:postgres/general
   - db-schema="public, a_horse, cheirrs, cheirrs_oseer, chubbamorris, chubbamorris_oseer, convey_it, convey_it_oseer"
   - db-anon-role=postgres
 
