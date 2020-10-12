@@ -37,17 +37,17 @@ spec:
           - name: DB_URI
             valueFrom:
               secretKeyRef:
-                name: itcsa-haskell-key-75h58mk57t
+                name: itcsa-haskell-key-f95df2tm74
                 key: db-uri
           - name: DB_SCHEMA
             valueFrom:
               secretKeyRef:
-                name: itcsa-haskell-key-75h58mk57t
+                name: itcsa-haskell-key-f95df2tm74
                 key: db-schema
           - name: DB_ANON_ROLE
             valueFrom:
               secretKeyRef:
-                name: itcsa-haskell-key-75h58mk57t
+                name: itcsa-haskell-key-f95df2tm74
                 key: db-anon-role
           - name: POSTGRES_HOST
             value: postgres
@@ -56,17 +56,17 @@ spec:
           - name: POSTGRES_DATABASE
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: database
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: username
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: password
         ports:
         - containerPort: 3000

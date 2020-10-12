@@ -42,34 +42,6 @@ spec:
             name: redis-cheirrs-oseer
             port:
               number: 6379
-      - path: /redis-chubbamorris:red-chubba
-        pathType: Prefix
-        backend:
-          service:
-            name: redis-chubbamorris
-            port:
-              number: 6379
-      - path: /redis-chubbamorris-oseer:red-chub-os
-        pathType: Prefix
-        backend:
-          service:
-            name: redis-chubbamorris-oseer
-            port:
-              number: 6379
-      - path: /redis-convey-it:red-conv-it
-        pathType: Prefix
-        backend:
-          service:
-            name: redis-convey-it
-            port:
-              number: 6379
-      - path: /redis-convey-it-oseer:red-cv-it-os
-        pathType: Prefix
-        backend:
-          service:
-            name: redis-convey-it-oseer
-            port:
-              number: 6379
       - path: /redis-a-horse:red-a-horse
         pathType: Prefix
         backend:

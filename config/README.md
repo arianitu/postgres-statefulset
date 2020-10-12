@@ -383,6 +383,12 @@ Try:
 
 You should see the single user's details.
 
+At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod, the haskell webserver pod, and the 3 redis pods, by obtaining their ip addresses from:
+
+`microk8s kubectl describe pods`,
+
+and editing pg_hba.conf to include these addresses with /24 as the CDR, and trust basis.
+
 
 
 Now switch to the second database-node terminal:
