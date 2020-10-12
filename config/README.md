@@ -275,11 +275,11 @@ If errors or excessive delay get messages with:
 
  (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
-`microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
+`microk8s kubectl cp create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
-`microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/insert_rows_scripts.sql postgres-0:/var/lib/postgresql/data/`
+`microk8s kubectl cp insert_rows_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
-`microk8s kubectl cp ../elastos-smartweb-service/grpc_adenine/database/scripts/reset_database.sql postgres-0:/var/lib/postgresql/data/`
+`microk8s kubectl cp reset_database.sql postgres-0:/var/lib/postgresql/data/`
 
 The following 3 commands will be possible only after signing an agreement and gaining our trust, in order to obtain these backup files.
 
