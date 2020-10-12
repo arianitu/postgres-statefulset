@@ -426,3 +426,25 @@ At this stage we need to discover how to issue requests to blockchain grpc serve
 
 Please help!
 
+
+For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
+
+Now the elastos/ubuntu containers are running with sleep time of 10,000 seconds during which you can complete server setups and start ipfs, hive and carrier nodes (after compiling on the nodes).
+
+Hive is the Elastos file storage system and relies on IPFS nodes to function. You require at least 2 ipfs nodes to obtain a private network which is consensus-capable.
+
+For ipfs compilation and installation please follow:
+
+https://github.com/ahester57/ipfs-private-swarm
+
+NOTE: An easy way to install go is at https://gist.github.com/d2s/6503f815431d1587c28bc37bfd715dbf
+
+For hive compilation and installation please follow:
+
+https://github.com/elastos/Elastos.NET.Hive.Native.SDK#1-install-pre-requirements
+
+The carrier network is the secure communications system developed by Rong Chen and used in his Elastos system. This is a simple message exchange node but the functions provided by carrier actually enable internet communication with full programmatic ability.
+
+For carrier compilation and installation please follow:
+
+https://github.com/elastos/Elastos.NET.Carrier.Native.SDK#2-install-pre-requirements
