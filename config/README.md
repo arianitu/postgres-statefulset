@@ -215,7 +215,7 @@ Run `microk8s kubectl apply -f config/secret.yml` and then `cd config && ./creat
 
 `cd ../`
 
-`microk8s kubectl apply -k ../kustomize-general`
+`microk8s kubectl apply -k .`
 
 `sudo mkdir -p /mnt/disk/pgdata`
 
