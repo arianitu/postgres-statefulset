@@ -281,7 +281,7 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl cp reset_database.sql postgres-0:/var/lib/postgresql/data/`
 
-The following 3 commands will be possible only after signing an agreement and gaining our trust, in order to obtain these backup files.
+The following 3 commands will be possible only after you are positively identified, gain our trust, and sign an agreement in order to obtain these backup files.
 
 `microk8s kubectl cp ../cheirrs_backup.sql postgres-0:/var/lib/postgresql/data/`
 
