@@ -447,6 +447,7 @@ If not:
 `microk8s kubectl label nodes hive-node nodetype=hive-node`, etc, etc
 
 
+
 For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the sub-cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to the master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
 
 You will need to run `microk8s add-node` on hive-node to join the carrier and ipfs2 nodes, making a second sub-cluster.
