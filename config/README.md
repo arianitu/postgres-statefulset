@@ -293,7 +293,7 @@ If errors or excessive delay get messages with:
 
  (This is the webserver to be used in place of so far unprogrammed Redis Servers).
  
- In order to obtain external access:
+ In order to obtain external access (eg. from host):
  
  `microk8s kubectl apply -f ingress.yml`
  
