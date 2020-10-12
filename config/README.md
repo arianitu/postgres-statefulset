@@ -177,7 +177,7 @@ Then:
 
 `docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
 
-Note in following, jhomitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
+Note in following, johnitcsolutionscomau/ubuntu_elastos_smartweb-base is a private repo. You will need to be a collaborator to see it.
 
 `docker tag johnitcsolutionscomau/ubuntu_elastos_smartweb-base:latest 10.184.36.93:32000/johnitcsolutionscomau/ubuntu_elastos_smartweb-base:1`
 
