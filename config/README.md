@@ -14,7 +14,7 @@ The docker-based development on this project is adaptable from the code in:
 
 https://github.com/cyber-republic/elastos-smartweb-service
 
-The database schemas for ITCSA's project are private and available only under conditions.
+The database schemas for ITCSA's project are private and available only under certain conditions.
 
 Development is easiest in Docker as opposed to Kubernetes.
 
