@@ -389,7 +389,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 8. `virtualenv -p ``which python3`` venv`
 
-NOTE: There should be backticks around which python3!
+NOTE: There should be single backticks around which python3!
 
 9. `source venv/bin/activate`
 
