@@ -319,13 +319,13 @@ Create users in postgres:
 
 `psql general`
 
-`create role cheirrs_user with login password 'Buddha10';`
+`create role cheirrs_user with login password 'passwd';`
 
-`create role cheirrs_admin with superuser login password 'Buddha10';`                 
+`create role cheirrs_admin with superuser login password 'passwd';`                 
 
-`create role cheirrs_oseer_admin with superuser login password 'Buddha10';`
+`create role cheirrs_oseer_admin with superuser login password 'passwd';`
 
-`create role a_horse_admin with superuser login password 'Buddha10';`     
+`create role a_horse_admin with superuser login password 'passwd';`     
 
 Check Schemas: there should be 'public, 'a_horse'; 'cheirrs'; 'cheirrs_oseer'.
 
