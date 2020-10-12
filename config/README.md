@@ -1,4 +1,5 @@
-# cheirrs-elastos-db-blockchains
+# postgres-db-elastos-blockchains
+
 Array of files with instructions to build backend in this README.md.
 
 Ideally you will need a 32 GB RAM; 250 GB SSD; + HDD PC (x32_64). eg an Extreme Gaming Computer.
