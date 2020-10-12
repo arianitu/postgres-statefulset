@@ -365,9 +365,9 @@ Now switch to the second database-node terminal:
 
 `microk8s kubectl apply -f elastos-smartweb.yml`
 
-(Track on master-node with watch microk8s kubectl get pods)
+(Track on master-node with `watch microk8s kubectl get pods`)
 
-When node is up and ready, copy id of pod to clipboard from master node (`watch microk8s kubectl get pods`), and replace below:
+When node is up and ready, copy id of pod to clipboard from master node (`watch microk8s kubectl get pods`), and insert below:
 
 `microk8s kubectl exec -it elastos-abcd1234-uvw542xy -- bash`
 
