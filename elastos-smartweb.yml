@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: elastos
-        image: localhost:32000/elastos:1
+        image: localhost:32000/johnitcsolutionscomau/elastos:1
         command: ["/bin/bash"]
         args: ["-c", "while true; do echo hello; sleep 10000;done"]
         ports:
