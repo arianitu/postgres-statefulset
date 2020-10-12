@@ -397,7 +397,7 @@ You are now inside the elastos-smartweb container from which we will be running 
 
 4. `pip3 install virtualenv`
 
-5. 'add-apt-repository ppa:ethereum/ethereum`
+5. `add-apt-repository ppa:ethereum/ethereum`
 
 6. `apt-get update`
 
