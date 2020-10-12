@@ -176,10 +176,10 @@ Then:
 
  You need to have something like:
  
-`{
-  insecure-registries : [10.184.36.93:32000, \
-                           10.184.36.143:32000]
-}`
+`{`
+`  insecure-registries : [10.184.36.93:32000,`
+`                           10.184.36.143:32000]`
+`}`
 
 where the 2 Ip Addresses must match your master-node and hive-node addresses. (Use `multipass list` on the host)
 
