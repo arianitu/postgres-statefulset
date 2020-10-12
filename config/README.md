@@ -479,4 +479,4 @@ For carrier compilation and installation please follow:
 https://github.com/elastos/Elastos.NET.Carrier.Native.SDK#2-install-pre-requirements
 
 
-The methods for connecting the Hive node to the IPFS system is so far a mystery to us!
+The methods for connecting the Hive node to the IPFS system are so far a mystery to us!
