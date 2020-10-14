@@ -436,6 +436,7 @@ Then, in database-node:
 
 and recommence from the step labeled 1 above (ie `source venv/bin/activate`).)
 
+## Remaining Nodes
 
 Check nodes are labeled with:
 
