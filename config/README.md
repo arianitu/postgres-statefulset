@@ -170,8 +170,6 @@ Then:
 
  `docker pull postgres:10.14`
 
- `docker pull postgrest/postgrest`
-
  `docker pull johnitcsolutionscomau/elastos:1` 
  
  Issue `multipass list` from host and note Ip Address of both the master-node and (if following with second sub-cluster) hive-node.
@@ -197,8 +195,6 @@ Then:
 
 `docker tag postgres:10.14 10.184.36.93:32000/postgres:10.14`
 
-`docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
-
 # Note in following, johnitcsolutionscomau/elastos is a private repo. You will need to be a collaborator to see it.
 
 `docker tag johnitcsolutionscomau/elastos:1 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
@@ -208,8 +204,6 @@ Then:
 `docker push 10.184.36.93:32000/redis:5.0.4`
 
 `docker push 10.184.36.93:32000/postgres:10.14`
-
-`docker push 10.184.36.93:32000/postgrest/postgrest:registry`
 
 `docker push 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
 
@@ -295,15 +289,11 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl apply -f redis-a-horse.yml`
  
- Database-node:
-
-`microk8s kubectl apply -f haskell.yml`
-
- (This is the webserver to be used in place of so far unprogrammed Redis Servers).
- 
- In order to obtain external access to system (eg. from host):
+ # In order to obtain external access to system (eg. from host):
  
  `microk8s kubectl apply -f ingress.yml`
+ 
+ ______________________________________________________________________
  
 `microk8s kubectl cp create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
 
@@ -387,7 +377,7 @@ Try:
 
 You should see the single user's details.
 
-At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod, the haskell webserver pod, and the 3 redis pods, by obtaining their ip addresses from:
+At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod and the 3 redis pods, by obtaining their ip addresses from:
 
 `microk8s kubectl describe pods`,
 
