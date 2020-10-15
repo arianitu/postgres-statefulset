@@ -21,13 +21,6 @@ spec:
             name: elastos
             port:
               number: 8001
-      - path: /haskell:webserve-http
-        pathType: Prefix
-        backend:
-          service:
-            name: haskell
-            port:
-              number: 3000
       - path: /redis-cheirrs:red-chrs
         pathType: Prefix
         backend:
