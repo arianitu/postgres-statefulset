@@ -44,17 +44,17 @@ spec:
           - name: POSTGRES_DATABASE
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: database
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: username
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: itcsa-postgres-key-9t6f84kgg5
+                name: itcsa-postgres-key-hgthdm6mk6
                 key: password
         ports:
         - containerPort: 6379
