@@ -179,8 +179,11 @@ Then:
  You need to have something like:
  
 `{`
+
 `  insecure-registries : [10.184.36.93:32000,`
+
 `                           10.184.36.143:32000]`
+
 `}`
 
 where the 2 Ip Addresses must match your master-node and hive-node addresses. (Use `multipass list` on the host)
@@ -403,7 +406,7 @@ When node is up and ready, copy id of pod to clipboard from master node (`watch 
 
 You are now inside the elastos-smartweb container from which we will be running the blockchains on a python-based grpc server.
 
-1.`cd elastos-smartweb-service && source venv/bin/activate`
+1.``
 
 2. `export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
 
@@ -419,7 +422,7 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 `microk8s kubectl describe pods`,
 
-and editing pg_hba.conf to include these addresses with /24 as the CDR, and on trust basis.
+and editing pg_hba.conf to include these addresses with /24 as the CIDR, and on trust basis.
 
 (Also note that if blockchains fall over on the elastos pod, you simply return to master node and 
 
@@ -439,7 +442,7 @@ At this stage we need to discover how to issue requests to the blockchain grpc s
 The following is experimental:
 
 Elastos/Ethereum is designed to work with Geth (Go Ethereum: https://geth.ethereum.org/docs/install-and-build/installing-geth)
-You should build Geth on multiple vm's using multipass without microk8s, as we will require multiple participants to test smart contract ops. We will start with 2 geth nodes, "geth-node-00" and "geth-node-01".
+You should build Geth on multiple vm's using multipass with microk8s, as we will require multiple participants to test smart contract ops. We will start with 2 geth nodes, "geth-node-00" and "geth-node-01".
 
 `multipass launch --name geth-node-00 --mem 2G --disk 20G`
 
@@ -448,6 +451,33 @@ You should build Geth on multiple vm's using multipass without microk8s, as we w
 `multipass mount /your/shared/host/directory geth-node-00:/home/ubuntu/shared`
 
 `multipass mount /your/shared/host/directory geth-node-01:/home/ubuntu/shared`
+
+
+In a new Host terminal:
+
+`multipass shell geth-node-00`
+
+Now, as we are inside geth-node-00;
+
+`sudo snap install microk8s --classic --channel=1.19`
+
+`sudo iptables -P FORWARD ACCEPT`
+
+`sudo usermod -a -G microk8s $USER`
+
+`sudo chown -f -R $USER ~/.kube`
+
+`sudo passwd ubuntu`  ..  etc,
+
+`su - $USER`
+
+`microk8s enable ambassador dashboard dns ha-cluster metrics-server storage`
+
+`microk8s status --wait-ready`
+
+If all is well, repeat above steps for geth-node-01.
+
+__________________________________________________________________
 
 We will need to ssh "tunnel" to the X-server clients on the geth nodes, from the Host Computer, in order to be able to see the output of the geth clients in a browser.
 
@@ -510,6 +540,22 @@ Then as long as geth-node-00 is connected via ssh tunnel to the desktop, when we
 on the geth-node-00, a firefox window will appear in desktop.
 
 Repeat above for geth-node-01.
+
+_______________________________________________________________
+
+Then we install Go Ethereum (geth) on each client node; geth-node-00 and geth-node-01.
+
+In Host Terminal (skip if still connected via ssh tunnel to geth-node-00)
+
+`sudo ssh -X -i /var/snap/multipass/common/data/multipassd/ssh-keys/id_rsa ubuntu@<geth-node-00_IP>`
+
+then,
+
+`sudo add-apt-repository -y ppa:ethereum/ethereum`
+
+`sudo apt-get update`
+
+`sudo apt-get install ethereum`
 
 Wait for next steps ..
 
