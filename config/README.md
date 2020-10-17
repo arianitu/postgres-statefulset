@@ -313,6 +313,10 @@ If errors or excessive delay get messages with:
 
 Inside postgres-0 container on database-node:
 
+`apk add nano`
+
+(To obtain editor. Choose your own if you wish.)
+
 `su postgres`
 
 `createdb general`
@@ -377,19 +381,19 @@ Try:
 
 You should see the single user's details.
 
-At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod and the 3 redis pods, by obtaining their ip addresses from:
+Now we turn to setting up the Blockchain Deployment, also on the database-node:
 
-`microk8s kubectl describe pods`,
+Switch to the second database-node terminal, and:
 
-and editing pg_hba.conf to include these addresses with /24 as the CDR, and on trust basis.
-
-
-
-Now switch to the second database-node terminal:
-
-`cd shared/postgres-db-elastos-blockchains `
+`cd shared/path/to/postgres-db-elastos-blockchains `
 
 `microk8s kubectl apply -f elastos-smartweb.yml`
+
+You can edit secret.yml but then you need to alter the redis-xyz.yml's as the hash for postgres key will change. So you would have to:
+
+`microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse`
+
+and restart from above. The deployments may be freely created and deleted at this stage as they are not programmed instances of Redis, more placeholders. The Elastos Blockchains operate as the server in development.
 
 (Track on master-node with `watch microk8s kubectl get pods`)
 
@@ -413,6 +417,12 @@ The following should start the blockchain connections
 
 Now the postgres db and elastos blockchains are running and connected.
 
+At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod and the 3 redis pods, by obtaining their ip addresses from:
+
+`microk8s kubectl describe pods`,
+
+and editing pg_hba.conf to include these addresses with /24 as the CDR, and on trust basis.
+
 
 At this stage we need to discover how to issue requests to blockchain grpc server and haskell webserver.
 
@@ -428,7 +438,7 @@ Then, in database-node:
 
 and recommence from the step labeled 1 above (ie `source venv/bin/activate`).)
 
-## Remaining Nodes
+## Remaining Nodes - Leaving this out is OK!
 
 Check nodes are labeled with:
 
@@ -437,8 +447,6 @@ Check nodes are labeled with:
 If not:
 
 `microk8s kubectl label nodes hive-node nodetype=hive-node`, etc, etc
-
-
 
 For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the sub-cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to the master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
 
