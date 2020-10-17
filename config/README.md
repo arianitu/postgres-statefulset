@@ -406,7 +406,7 @@ When node is up and ready, copy id of pod to clipboard from master node (`watch 
 
 You are now inside the elastos-smartweb container from which we will be running the blockchains on a python-based grpc server.
 
-1.``
+1.`cd shared/path/to/postgres-db-elastos-blockchains `
 
 2. `export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
 
