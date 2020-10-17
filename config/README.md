@@ -389,7 +389,7 @@ Switch to the second database-node terminal, and:
 
 `microk8s kubectl apply -f elastos-smartweb.yml`
 
-You can edit secret.yml but then you need to alter the redis-xyz.yml's as the hash for postgres key will change. So you would have to:
+You can edit secret.yml but then you need to alter the redis-xyz.yml's as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
 
 `microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse`
 
