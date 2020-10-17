@@ -464,9 +464,13 @@ Now, you are inside the geth-node-00:
 insert the following:
 
 `X11Forwarding yes`
+
 `X11DisplayOffset 10`
+
 `PrintMotd no`
+
 `PrintLastLog yes`
+
 `TCPKeepAlive yes`
 
 ctrl-O, <Enter>, ctrl-X, to save and exit nano.
