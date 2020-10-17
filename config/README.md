@@ -403,9 +403,7 @@ When node is up and ready, copy id of pod to clipboard from master node (`watch 
 
 You are now inside the elastos-smartweb container from which we will be running the blockchains on a python-based grpc server.
 
-`cd elastos-smartweb-service`
-
-1. `source venv/bin/activate`
+1.`cd elastos-smartweb-service && source venv/bin/activate`
 
 2. `export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
 
@@ -423,12 +421,7 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 and editing pg_hba.conf to include these addresses with /24 as the CDR, and on trust basis.
 
-
-At this stage we need to discover how to issue requests to blockchain grpc server and haskell webserver.
-
-## Please help! ##
-
-(Also note that if blockchains fall over you simply return to master node and 
+(Also note that if blockchains fall over on the elastos pod, you simply return to master node and 
 
 `microk8s kubectl get pods` and copy id of "elastos" blockchains pod.
 
@@ -436,7 +429,103 @@ Then, in database-node:
 
 `microk8s kubectl exec -it elastos-abcdefg123-vcxzs32 -- bash`
 
-and recommence from the step labeled 1 above (ie `source venv/bin/activate`).)
+and recommence from the step labeled 1 above (ie `cd elastos-smartweb-service && source venv/bin/activate`).)
+
+
+At this stage we need to discover how to issue requests to the blockchain grpc server.
+
+## Please help! ##
+
+The following is experimental:
+
+Elastos/Ethereum is designed to work with Geth (Go Ethereum: https://geth.ethereum.org/docs/install-and-build/installing-geth)
+You should build Geth on multiple vm's using multipass without microk8s, as we will require multiple participants to test smart contract ops. We will start with 2 geth nodes, "geth-node-00" and "geth-node-01".
+
+`multipass launch --name geth-node-00 --mem 2G --disk 20G`
+
+`multipass launch --name geth-node-01 --mem 2G --disk 20G`
+
+`multipass mount /your/shared/host/directory geth-node-00:/home/ubuntu/shared`
+
+`multipass mount /your/shared/host/directory geth-node-01:/home/ubuntu/shared`
+
+We will need to ssh "tunnel" to the X-server clients on the geth nodes, from the Host Computer, in order to be able to see the output of the geth clients in a browser.
+
+At this stage it appears we will also have to tunnel to the geth nodes to connect the Truffle Suite, which will be located on the Host.
+
+We follow https://fabianlee.org/2018/10/14/ubuntu-x11-forwarding-to-view-gui-applications-running-on-server-hosts/ , however the instructions are general there and they need alteration as follows (from the beginning,):
+
+`multipass shell geth-node-00`
+
+Now, you are inside the geth-node-00:
+
+`sudo nano /etc/ssh/ssh_config`
+
+insert the following:
+
+`X11Forwarding yes
+X11DisplayOffset 10
+PrintMotd no
+PrintLastLog yes
+TCPKeepAlive yes`
+
+ctrl-O, <Enter>, ctrl-X, to save and exit nano.
+
+restart the ssh service:
+
+`sudo systemctl restart ssh`
+
+Install our test app in node:
+
+`sudo apt-get install vim-gtk`
+
+Now move to a Host terminal:
+
+`sudo ssh -X -i /var/snap/multipass/common/data/multipassd/ssh-keys/id_rsa ubuntu@<geth-node-00_IP>`
+
+You should land inside geth-node-00! Not using `multipass shell ..`! Now issue:
+
+`echo $DISPLAY` --(should display: `localhost:10.0`)
+
+`echo "This should be displayed in gvim!" > test.txt`
+
+Now when we issue `gvim test.txt` a window should open in your ubuntu desktop, displaying the message.
+
+Install Firefox on geth-node-00:
+
+`sudo apt update`
+
+`sudo apt install firefox`
+
+`firefox --version`
+
+Then as long as geth-node-00 is connected via ssh tunnel to the desktop, when we issue:
+
+`firefox`
+
+on the geth-node-00, a firefox window will appear in desktop.
+
+Repeat above for geth-node-01.
+
+Wait for next steps ..
+
+___________________________________________________
+
+Before following the 'Getting Started with Geth' instructions, we need to enable communication between the Go-based Geth client and the python-based gRPC Elastos/Ethereum Blockchains running on the database-node in the "elastos" deployment. This deployment also provides interfaces to the Mainchain, Sidechain DID, and Sidechain Token blockchains. At the gihub site of origin of elastos-smartweb-service: https://github.com/cyber-republic/elastos-smartweb-service
+  there are instructions on building the protocol buffer files which enable the go client for Geth to communicate with the python elastos gRPC server. "Additional Info:
+
+Command to build protocol buffer files:"
+
+Go to the second dot point below this at "For generating golang client code "
+
+
+Next we follow the "Dev mode" line on the same website, however the following instructions will prevent errors:
+
+`sudo mkdir /root/.ethereum`
+
+`geth --datadir /root/.ethereum --rpc --rpcport 8001 --rpcaddr YOUR_elastos_pod_IP --dev --rpccorsdomain "http://localhost:3000"`
+
+
 
 ## Remaining Nodes - Leaving this out is OK!
 
