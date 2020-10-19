@@ -410,13 +410,13 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 `microk8s kubectl describe pods`,
 
-and editing pg_hba.conf to include these addresses with /24 as the CIDR, and on trust basis.
+and editing pg_hba.conf to include these addresses with /32 as the CIDR, and on trust basis.
 
 ## Please help! ##
 
 The following is experimental:
 
-In truffle terminal:
+In truffle-node terminal:
 
 `sudo apt-get update`
 
@@ -434,7 +434,7 @@ However if you issue (on a second master-node terminal):
 
 `microk8s kubectl get services`
 
-you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The network_id should be "3", and the host Ip-Address to use is the vm (node) address of the blockchain-node - obtainable from:
+you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The network_id should be "3", and the host Ip-Address to use is the vm (node) address of the blockchains-node - obtainable from:
 
 `multipass list`, run on the Host computer.
 
@@ -442,7 +442,7 @@ The remaining edits required for truffle-config.js are on the latter webpage.
 
 You should follow that page for a link to the ELA/ETH "faucet" where we are supposed to obtain Test Eth. I found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
 
-We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. After running
+We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. This means we are connected to the Elastos Blockchains. After running
 
 `truffle console --network development`
 
