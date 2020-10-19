@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastos
+  labels:
+    app: elastos
+spec:
+  type: LoadBalancer
+  selector:
+    app: elastos
+  ports:
+  - name: main-01
+    protocol: TCP
+    port: 21334
+    targetPort: 21334
+  - name: main-02
+    protocol: TCP
+    port: 21336
+    targetPort: 21336
+  - name: did-01
+    protocol: TCP
+    port: 21604
+    targetPort: 21604
+  - name: did-02
+    protocol: TCP
+    port: 21606
+    targetPort: 21606
+  - name: token-01
+    protocol: TCP
+    port: 21614
+    targetPort: 21614
+  - name: token-02
+    protocol: TCP
+    port: 21616
+    targetPort: 21616
+  - name: eth-01
+    protocol: TCP
+    port: 21634
+    targetPort: 21634
+  - name: eth-02
+    protocol: TCP
+    port: 21636
+    targetPort: 21636
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastos
+spec:
+  selector:
+    matchLabels:
+      app: elastos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elastos
+    spec:
+      containers:
+      - name: eth
+        image: localhost:32000/cyberrepublic/elastos-sidechain-eth-node:registry
+        command: ["/bin/sh"]
+        args: ["-c", "./geth --testnet --datadir elastos_eth --ethash.dagdir elastos_ethash --gcmode 'archive' --rpc --rpcaddr 0.0.0.0 --rpccorsdomain '*' --rpcvhosts '*' --rpcport 21636 --rpcapi 'personal,db,eth,net,web3,txpool,miner'"]
+        ports:
+        - containerPort: 21634
+        - containerPort: 21636
+      - name: token
+        image: localhost:32000/cyberrepublic/elastos-sidechain-token-node:v0.1.2
+        command: ["/bin/sh"]
+        args: ["-c", "./token"]
+        ports:
+        - containerPort: 21614
+        - containerPort: 21616
+      - name: did
+        image: localhost:32000/cyberrepublic/elastos-sidechain-did-node:v0.1.2
+        command: ["/bin/sh"]
+        args: ["-c", "./did"]
+        ports:
+        - containerPort: 21604
+        - containerPort: 21606
+      - name: main
+        image: localhost:32000/cyberrepublic/elastos-mainchain-node:v0.3.7
+        command: ["/bin/sh"]
+        args: ["-c", "./ela -p 123"]
+        ports:
+        - containerPort: 21334
+        - containerPort: 21336
+      nodeSelector:
+        nodetype: blockchains-node
