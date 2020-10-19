@@ -15,7 +15,7 @@ The work here is based off the official documentation here https://wiki.postgres
 
 `microk8s kubectl apply -k .`
 
-# will be different, and your haskell.yml will need to have the key hashes rematched in the text. Please refer to config/README.md. Read the following as education. Do not follow here. Follow config/README.md.
+# will be different, and your haskell.yml and redis-xyz.yml's will need to have the key hashes rematched in the text. Please refer to config/README.md. Read the following as education. Do not follow here. Follow config/README.md.
 
 2. Run `kubectl apply -f config/secret.yml` and then `cd config && ./create_configmap.sh`
 
