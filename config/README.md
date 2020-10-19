@@ -32,17 +32,13 @@ Nevertheless, if you wish to go on to build a full set of nodes with High Availa
 
 `multipass launch --name master-node --mem 3G --disk 15G`
 
-`multipass launch --name database-node --mem 8G --disk 50G`
+`multipass launch --name database-node --mem 3G --disk 50G`
 
-`multipass launch --name ipfs1-node --mem 2G --disk 10G`
+`multipass launch --name blockchains-node --mem 3G --disk 15G`
 
-`multipass launch --name ipfs2-node --mem 2G --disk 10G`
+`multipass launch --name truffle-node --mem 4G --disk 15G`
 
-`multipass launch --name carrier-node --mem 2G --disk 10G`
-
-`multipass launch --name hive-node --mem 3G --disk 15G`
-
-Open 7 new terminal tabs.
+Open 4 new terminal tabs.
 
 In first:
 
@@ -54,23 +50,11 @@ In second:
 
 In third:
 
-`multipass shell database-node` (yes, that's correct)
+`multipass shell blockchains-node` 
 
 In fourth:
 
-`multipass shell ipfs1-node`
-
-In fifth:
-
-`multipass shell ipfs2-node`
-
-In sixth:
-
-`multipass shell hive-node`
-
-In seventh:
-
-`multipass shell carrier-node`
+`multipass shell truffle-node`
 
 In first (within master-node):
 
@@ -90,11 +74,11 @@ In first (within master-node):
 
 `microk8s enable ambassador dashboard dns ha-cluster metrics-server registry storage`
 
-Repeat above 7 commands in each of database-node, ipfs1-node, ipfs2-node, hive-node and carrier-node.
+Repeat above 7 commands in each of database-node, blockchains-node, truffle-node.
 
 Check state of microk8s in each node:
 
-`microk8s status` x 6
+`microk8s status --wait-ready` x 4
 
 if all is well continue below. If any node is no longer running microk8s, sudo snap remove microk8s then reinstall as above.
 
@@ -104,27 +88,13 @@ On master-node
 
 `microk8s add-node`  ... and copy the join command to the database node.
 
-When the database-node has joined, repeat for ipfs1-node.
+When the database-node has joined, repeat for blockchains-node.
 
-# The limit of nodes in a sub-cluster is 3, with one master per sub-cluster, 
-
-# where any node issuing a join command with
-
- `microk8s add-node` 
- 
- # will be treated as a master node. 
-
-We have 6 nodes so we choose the hive-node as the second master from which we will issue join commands to ipfs2 and carrier. 
-
-Go ahead and add those 2 nodes to the hive-node sub-cluster.
+Go ahead and add the truffle-node to the cluster.
 
 Recheck microk8s status on every node.
 
 {`sudo snap remove microk8s`, reinstall, enable add-ons (see above) and join again, in case of microk8s not running.}
-
-# If you cannot get the second sub-cluster to run, it is still quite feasible to run only a single 3 node HA-Cluster. 
-
-Leave out ipfs2 (or ipfs1), Hive and Carrier if necessary. If you want HA, you need 3 nodes running and joined.
 
 Next we need to label the nodes:
 
@@ -159,20 +129,24 @@ Then:
 `multipass mount /your/repo/host/path/postgres-db-elastos-blockchains  carrier-node:/home/ubuntu/shared`
 
  IN HOST TERMINAL:
-
-`docker login` 
-
-# (You need to be a collaborator, as "johnitcsolutionscomau/elastos" is a private repo).
  
  Now we pull the images we need:
 
  `docker pull redis:5.0.4`
 
  `docker pull postgres:10.14`
-
- `docker pull johnitcsolutionscomau/elastos:1` 
  
- Issue `multipass list` from host and note Ip Address of both the master-node and (if following with second sub-cluster) hive-node.
+ .. from the Elastos Develap Binaries, we have examined the output of a Docker subsystem running the following Blockchains, and managed to reconstruct the system as a Kubernetes Deployment.
+
+ `docker pull cyberrepublic/elastos-mainchain-node:v0.3.7`
+ 
+ `docker pull cyberrepublic/elastos-sidechain-did-node:v0.1.2`
+ 
+ `docker pull cyberrepublic/elastos-sidechain-token-node:v0.1.2`
+ 
+ `docker pull cyberrepublic/elastos-sidechain-eth-node:latest`
+ 
+ Issue `multipass list` from host and note Ip Address of the master-node.
  
  `sudo nano /etc/docker/daemon.json`
 
@@ -182,11 +156,11 @@ Then:
 
 `  insecure-registries : [10.184.36.93:32000,`
 
-`                           10.184.36.143:32000]`
+`                           ]`
 
 `}`
 
-where the 2 Ip Addresses must match your master-node and hive-node addresses. (Use `multipass list` on the host)
+where the 2 Ip Addresses must match your master-node address. (Use `multipass list` on the host)
 
 Then:
 
@@ -198,21 +172,27 @@ Then:
 
 `docker tag postgres:10.14 10.184.36.93:32000/postgres:10.14`
 
-# Note in following, johnitcsolutionscomau/elastos is a private repo. You will need to be a collaborator to see it.
+`docker tag cyberrepublic/elastos-mainchain-node:v0.3.7 10.184.36.93:32000/cyberrepublic/elastos-mainchain-node:v0.3.7`
 
-`docker tag johnitcsolutionscomau/elastos:1 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
+`docker tag cyberrepublic/elastos-sidechain-did-node:v0.1.2 10.184.36.93:32000/cyberrepublic/elastos-sidechain-did-node:v0.1.2`
 
-`docker tag johnitcsolutionscomau/elastos:1 10.184.36.143:32000/johnitcsolutionscomau/elastos:1`
+`docker tag cyberrepublic/elastos-sidechain-token-node:v0.1.2 10.184.36.93:32000/cyberrepublic/elastos-sidechain-token-node:v0.1.2`
+
+`docker tag cyberrepublic/elastos-sidechain-eth-node:latest 10.184.36.93:32000/cyberrepublic/elastos-sidechain-eth-node:registry`
 
 `docker push 10.184.36.93:32000/redis:5.0.4`
 
 `docker push 10.184.36.93:32000/postgres:10.14`
 
-`docker push 10.184.36.93:32000/johnitcsolutionscomau/elastos:1`
+`docker push 10.184.36.93:32000/cyberrepublic/elastos-mainchain-node:v0.3.7`
 
-`docker push 10.184.36.143:32000/johnitcsolutionscomau/elastos:1`
+`docker push 10.184.36.93:32000/cyberrepublic/elastos-sidechain-did-node:v0.1.2`
 
-(Remember to change the above Ip Addresses to match your own node addresses for master and hive nodes!)
+`docker push 10.184.36.93:32000/cyberrepublic/elastos-sidechain-token-node:v0.1.2`
+
+`docker push 10.184.36.93:32000/cyberrepublic/elastos-sidechain-eth-node:registry`
+
+(Remember to change the above Ip Addresses to match your own node address for master node!)
 
 Now in database-node:
 
@@ -292,10 +272,6 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl apply -f redis-a-horse.yml`
  
- # In order to obtain external access to system (eg. from host):
- 
- `microk8s kubectl apply -f ingress.yml`
- 
  ______________________________________________________________________
  
 `microk8s kubectl cp create_table_scripts.sql postgres-0:/var/lib/postgresql/data/`
@@ -304,7 +280,7 @@ If errors or excessive delay get messages with:
 
 `microk8s kubectl cp reset_database.sql postgres-0:/var/lib/postgresql/data/`
 
-# The following 3 commands will be possible only after you are positively identified, gain our trust, and sign an agreement in order to obtain these backup files.
+# The following 3 commands would be possible only after you are positively identified, gain our trust, and sign an agreement to work with us, in order to obtain these backup files. Or, develop your own!
 
 `microk8s kubectl cp ../cheirrs_backup.sql postgres-0:/var/lib/postgresql/data/`
 
@@ -318,7 +294,7 @@ Inside postgres-0 container on database-node:
 
 `apk add nano`
 
-(To obtain editor. Choose your own if you wish.)
+(To obtain editor. Choose your own if you wish. Note the Postgresql deployment is based on an Alpine Linux image, and is therefore somewhat different to Ubuntu.)
 
 `su postgres`
 
@@ -384,242 +360,68 @@ Try:
 
 You should see the single user's details.
 
-Now we turn to setting up the Blockchain Deployment, also on the database-node:
+______________________________________________________
 
-Switch to the second database-node terminal, and:
+## Blockchains
+
+Now we turn to setting up the Blockchain Deployment, on the blockchains-node:
+
+In the master-node terminal,
 
 `cd shared/path/to/postgres-db-elastos-blockchains `
 
-`microk8s kubectl apply -f elastos-smartweb.yml`
+`microk8s kubectl apply -f elastos-develap.yml`
 
 You can edit secret.yml but then you need to alter the redis-xyz.yml's as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
 
 `microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse`
 
-and restart from above. The deployments may be freely created and deleted at this stage as they are not programmed instances of Redis, more placeholders. The Elastos Blockchains operate as the server in development.
+and restart from above. The deployments may be freely created and deleted at this stage as they are not programmed instances of Redis, more placeholders. Likewise with the Haskell webserver, it is an adaptable element which can readily be destroyed and recreated.
 
 (Track on master-node with `watch microk8s kubectl get pods`)
 
-When node is up and ready, copy id of pod to clipboard from master node (`watch microk8s kubectl get pods`), and insert below:
-
-`microk8s kubectl exec -it elastos-abcd1234-uvw542xy -- bash`
-
-You are now inside the elastos-smartweb container from which we will be running the blockchains on a python-based grpc server.
-
-1.`cd elastos-smartweb-service && source venv/bin/activate`
-
-2.`export PYTHONPATH=$PYTHONPATH:$PWD/grpc_adenine/stubs/`
-
-Still in postgres-0 container on database-node in elastos-smartweb-service directory:
-
-The following should start the blockchain connections
-
-3. `python3 grpc_adenine/server.py`
-
-Now the postgres db and elastos blockchains are running and connected.
-
-At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod and the 3 redis pods, by obtaining their ip addresses from:
+At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to allow access from the elastos blockchains pod, the Haskell webserver, and the 3 redis pods, by obtaining their ip addresses from:
 
 `microk8s kubectl describe pods`,
 
 and editing pg_hba.conf to include these addresses with /24 as the CIDR, and on trust basis.
 
-(Also note that if blockchains fall over on the elastos pod, you simply return to master node and 
-
-`microk8s kubectl get pods` and copy id of "elastos" blockchains pod.
-
-Then, in database-node: 
-
-`microk8s kubectl exec -it elastos-abcdefg123-vcxzs32 -- bash`
-
-and recommence from the step labeled 1 above (ie `cd elastos-smartweb-service && source venv/bin/activate`).)
-
-
-At this stage we need to discover how to issue requests to the blockchain grpc server.
-
 ## Please help! ##
 
 The following is experimental:
 
-Elastos/Ethereum is designed to work with Geth (Go Ethereum: https://geth.ethereum.org/docs/install-and-build/installing-geth)
-You should build Geth on multiple vm's using multipass with microk8s, as we will require multiple participants to test smart contract ops. We will start with 2 geth nodes, "geth-node-00" and "geth-node-01".
-
-`multipass launch --name geth-node-00 --mem 2G --disk 20G`
-
-`multipass launch --name geth-node-01 --mem 2G --disk 20G`
-
-`multipass mount /your/shared/host/directory geth-node-00:/home/ubuntu/shared`
-
-`multipass mount /your/shared/host/directory geth-node-01:/home/ubuntu/shared`
-
-
-In a new Host terminal:
-
-`multipass shell geth-node-00`
-
-Now, as we are inside geth-node-00;
-
-`sudo snap install microk8s --classic --channel=1.19`
-
-`sudo iptables -P FORWARD ACCEPT`
-
-`sudo usermod -a -G microk8s $USER`
-
-`sudo chown -f -R $USER ~/.kube`
-
-`sudo passwd ubuntu`  ..  etc,
-
-`su - $USER`
-
-`microk8s enable ambassador dashboard dns ha-cluster metrics-server storage`
-
-`microk8s status --wait-ready`
-
-If all is well, repeat above steps for geth-node-01.
-
-__________________________________________________________________
-
-We will need to ssh "tunnel" to the X-server clients on the geth nodes, from the Host Computer, in order to be able to see the output of the geth clients in a browser.
-
-At this stage it appears we will also have to tunnel to the geth nodes to connect the Truffle Suite, which will be located on the Host.
-
-We follow https://fabianlee.org/2018/10/14/ubuntu-x11-forwarding-to-view-gui-applications-running-on-server-hosts/ , however the instructions are general there and they need alteration as follows (from the beginning,):
-
-`multipass shell geth-node-00`
-
-Now, you are inside the geth-node-00:
-
-`sudo nano /etc/ssh/ssh_config`
-
-insert the following:
-
-`X11Forwarding yes`
-
-`X11DisplayOffset 10`
-
-`PrintMotd no`
-
-`PrintLastLog yes`
-
-`TCPKeepAlive yes`
-
-ctrl-O, <Enter>, ctrl-X, to save and exit nano.
-
-restart the ssh service:
-
-`sudo systemctl restart ssh`
-
-Install our test app in node:
-
-`sudo apt-get install vim-gtk`
-
-Now move to a Host terminal:
-
-`sudo ssh -X -i /var/snap/multipass/common/data/multipassd/ssh-keys/id_rsa ubuntu@<geth-node-00_IP>`
-
-You should land inside geth-node-00! Not using `multipass shell ..`! Now issue:
-
-`echo $DISPLAY` --(should display: `localhost:10.0`)
-
-`echo "This should be displayed in gvim!" > test.txt`
-
-Now when we issue `gvim test.txt` a window should open in your ubuntu desktop, displaying the message.
-
-Install Firefox on geth-node-00:
-
-`sudo apt update`
-
-`sudo apt install firefox`
-
-`firefox --version`
-
-Then as long as geth-node-00 is connected via ssh tunnel to the desktop, when we issue:
-
-`firefox`
-
-on the geth-node-00, a firefox window will appear in desktop.
-
-Repeat above for geth-node-01.
-
-_______________________________________________________________
-
-Then we install Go Ethereum (geth) on each client node; geth-node-00 and geth-node-01.
-
-In Host Terminal (skip if still connected via ssh tunnel to geth-node-00)
-
-`sudo ssh -X -i /var/snap/multipass/common/data/multipassd/ssh-keys/id_rsa ubuntu@<geth-node-00_IP>`
-
-then,
-
-`sudo add-apt-repository -y ppa:ethereum/ethereum`
+In truffle terminal:
 
 `sudo apt-get update`
 
-`sudo apt-get install ethereum`
+`sudo apt-get install npm`
 
-Wait for next steps ..
+`sudo npm install -g truffle solc @truffle/hdwallet-provider`
 
-___________________________________________________
+`truffle init`
 
-Before following the 'Getting Started with Geth' instructions, we need to enable communication between the Go-based Geth client and the python-based gRPC Elastos/Ethereum Blockchains running on the database-node in the "elastos" deployment. This deployment also provides interfaces to the Mainchain, Sidechain DID, and Sidechain Token blockchains. At the gihub site of origin of elastos-smartweb-service: https://github.com/cyber-republic/elastos-smartweb-service
-  there are instructions on building the protocol buffer files which enable the go client for Geth to communicate with the python elastos gRPC server. "Additional Info:
+`nano truffle-config.js`
 
-Command to build protocol buffer files:"
+By deleting the comment "//"'s in the "development" section in "networks", you need to enable the development network to connect to the Elastos/Eth blockchain. Although the documentation at https://developer.elastos.org/elastos_core_services/guides/ethereum_smart_contracts/deploying_smart_contracts/ gives the Eth rpc port number in the Elastos System as 21636, in Kubernetes that number refers only to the port on the Elastos Ethereum Blockchain Container, and is inaccessible at that number from outside the container.
 
-Go to the second dot point below this at "For generating golang client code "
+However if you issue (on a second master-node terminal):
 
+`microk8s kubectl get services`
 
-Next we follow the "Dev mode" line on the same website, however the following instructions will prevent errors:
+you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The host Ip-Address to use is the vm (node) address of the blockchain-node - obtainable from:
 
-`sudo mkdir /root/.ethereum`
+`multipass list`, run on the Host computer.
 
-`geth --datadir /root/.ethereum --rpc --rpcport 8001 --rpcaddr YOUR_elastos_pod_IP --dev --rpccorsdomain "http://localhost:3000"`
+The remaining edits required for truffle-config.js are on the latter webpage.
 
+You should follow that page for a link to the ELA/ETH "faucet" where we are supposed to obtain Test Eth. I found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
 
+We did find that we could successfully connect to the Truffle development network (as paupers) with that nodePort config. after running
 
-## Remaining Nodes - Leaving this out is OK!
+`truffle console --network development`
 
-Check nodes are labeled with:
+We were able to obtain an Eth Account Address with:
 
-`microk8s kubectl get nodes --show-labels`
+`web3.eth.personal.newAccount("MY_PASSWORD")`
 
-If not:
-
-`microk8s kubectl label nodes hive-node nodetype=hive-node`, etc, etc
-
-For the remaining nodes (ipfs1, ipfs2, hive, carrier) the procedure involves running the yml for the node (eg ipfs1.yml) from the master node of the sub-cluster. If you have a second 3-node sub-cluster with acting master as hive-node, and High Availability enabled, you can also run the yml's from their own nodes. The ipfs1-node is assumed to be joined to the master-node sub-cluster. The remaining 3 nodes are assumed to be joined on hive-node as master. Running `microk8s kubectl apply -f shared/path to/postgres-db-elastos-blockchains/hive.yml` is a start. Follow with the rest.
-
-You will need to run `microk8s add-node` on hive-node to join the carrier and ipfs2 nodes, making a second sub-cluster.
-
-Now the elastos/ubuntu containers are running with sleep time of 10,000 seconds during which you can complete server setups and start ipfs, hive and carrier nodes (after compiling on the nodes).
-
-Please note that in the following all the compiling and installing needs to happen inside the containers.
-
-So, before starting to follow any instructions make sure you are inside the relevant pod (whose id you obtain by inspecting `watch microk8s kubectl get pods`) by running:
-
-`microk8s kubectl exec -it ipfs1-6d4ccbdd56-bqbkc -- bash`  -- please replace ipfs1 id with your own value.
-
-You should ignore the presence of the elastos-smartweb-service folder inside the container, as this is there for convenience only in the other case.
-
-Similar commands should be issued before installing Hive and Carrier, so they are installed inside pods, not directly onto a node.
-
-Hive is the Elastos file storage system and relies on IPFS nodes to function. You require at least 2 ipfs nodes to obtain a private network which is consensus-capable.
-
-For ipfs compilation and installation please follow:
-
-https://github.com/ahester57/ipfs-private-swarm
-
-NOTE: An easy way to install go is at https://gist.github.com/d2s/6503f815431d1587c28bc37bfd715dbf
-
-For hive compilation and installation please follow:
-
-https://github.com/elastos/Elastos.NET.Hive.Native.SDK#1-install-pre-requirements
-
-The carrier network is the secure communications system developed by Rong Chen and used in his Elastos system. This is a simple message exchange node but the functions provided by carrier actually enable internet communication with full programmatic ability.
-
-For carrier compilation and installation please follow:
-
-https://github.com/elastos/Elastos.NET.Carrier.Native.SDK#2-install-pre-requirements
-
-
-## The methods for connecting the Hive node to the IPFS system are so far a mystery to us! ##
+We then inserted that Account Address into the truffle-config.js file as described on the above Elastos webpage.
