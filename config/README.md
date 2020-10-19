@@ -422,7 +422,7 @@ However if you issue (on a second master-node terminal):
 
 `microk8s kubectl get services`
 
-you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The host Ip-Address to use is the vm (node) address of the blockchain-node - obtainable from:
+you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The network_id should be "3", and the host Ip-Address to use is the vm (node) address of the blockchain-node - obtainable from:
 
 `multipass list`, run on the Host computer.
 
