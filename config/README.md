@@ -200,6 +200,8 @@ Now in database-node:
 
 `cd /home/ubuntu/shared/path/to/postgres-db-elastos-blockchains`
 
+Note: "You can edit secret.yml but then you need to alter the redis-xyz.yml's and haskell.yml as the hash for the keys will change. So you would have to find the hashes in those yml files and alter to match newly created keys - from `microk8s kubectl apply -k .`"
+
 Run `microk8s kubectl apply -f config/secret.yml` and then `cd config && ./create_configmap.sh`    
 
 `cd ../`
@@ -386,7 +388,7 @@ In the master-node terminal,
 
 `microk8s kubectl apply -f elastos-develap.yml`
 
-You can edit secret.yml but then you need to alter the redis-xyz.yml's as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
+You can edit secret.yml but then you need to alter the redis-xyz.yml's and haskell.yml as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
 
 `microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse`
 
