@@ -1,0 +1,15 @@
+secretGenerator:
+- name: itcsa-postgres-key
+  literals:
+  - username=postgres
+  - password=passwd
+  - database=general
+  - replicaPassword=passwd
+
+- name: itcsa-haskell-key
+  literals:
+  - db-uri="postgres://postgres:passwd@postgres:postgres/general
+  - db-schema="public, a_horse, cheirrs, cheirrs_oseer"
+  - db-anon-role=postgres
+
+
