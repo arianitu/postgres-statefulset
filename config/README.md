@@ -18,9 +18,13 @@ Remember to `sudo usermod -aG docker $USER && newgrp docker` after install is co
 
 The docker-based development on this project is adaptable from the code in:
 
-https://github.com/cyber-republic/elastos-smartweb-service
+https://developer.elastos.org/get_started/setup/env_setup/setup_develap/
 
-# The database schemas for ITCSA's project are private and available only under certain conditions.
+and
+
+https://developer.elastos.org/elastos_core_services/guides/ethereum_smart_contracts/
+
+# The database schemae for ITCSA's project are private and available only under certain conditions.
 
 Development is easiest in Docker as opposed to Kubernetes.
 
@@ -134,7 +138,7 @@ Then:
  
   `docker pull postgrest/postgrest:latest`
  
- .. from the Elastos Develap Binaries, we have examined the output of a Docker subsystem running the following Blockchains, and managed to reconstruct the system as a Kubernetes Deployment.
+ .. by running the Elastos Develap Binaries, we have examined the output of a Docker subsystem running the following Blockchains, and managed to reconstruct the system as a Kubernetes Deployment.
 
  `docker pull cyberrepublic/elastos-mainchain-node:v0.3.7`
  
@@ -211,6 +215,12 @@ Generate further secrets from kustomization file:
 `microk8s kubectl apply -k .`
 
 Create places for persistent volumes on database-node and allow access:
+
+.. you can either;
+
+`sudo ./volumes.sh`
+
+.. or,
 
 `sudo mkdir -p /mnt/disk/pgdata`
 
