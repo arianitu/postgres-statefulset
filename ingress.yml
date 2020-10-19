@@ -1,0 +1,96 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: general-ingress
+  annotations:
+    kubernetes.io/ambassador: /
+spec:
+  defaultBackend:
+    service:
+      name: elastos
+      port:
+        number: 21336
+  rules:
+  - host: "blockchains-node"
+  - http:
+      paths:
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21334
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21336
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21604
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21606
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21614
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21616
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21634
+      - path: /elastos
+        pathType: Prefix
+        backend:
+          service:
+            name: elastos
+            port:
+              number: 21636
+  - host: "database-node"
+  - http:
+      paths:
+      - path: /redis-cheirrs
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-cheirrs
+            port:
+              number: 6379
+      - path: /redis-cheirrs-oseer
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-cheirrs-oseer
+            port:
+              number: 6379
+      - path: /redis-a-horse
+        pathType: Prefix
+        backend:
+          service:
+            name: redis-a-horse
+            port:
+              number: 6379
