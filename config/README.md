@@ -430,12 +430,14 @@ The remaining edits required for truffle-config.js are on the latter webpage.
 
 You should follow that page for a link to the ELA/ETH "faucet" where we are supposed to obtain Test Eth. I found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
 
-We did find that we could successfully connect to the Truffle development network (as paupers) with that nodePort config. after running
+We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. After running
 
 `truffle console --network development`
 
-We were able to obtain an Eth Account Address with:
+we were able to obtain an Eth Account Address with:
 
 `web3.eth.personal.newAccount("MY_PASSWORD")`
 
 We then inserted that Account Address into the truffle-config.js file as described on the above Elastos webpage.
+
+At the very least this means we have managed to successfully construct a fully connected Kubernetes backend for the Database and Blockchains (based on Postgresql and the Elastos Develap Binaries) with a Truffle node upon which solidity smart contracts programming would be able to occur against the Blockchains, given we had some Test ELA/ETH. We are able to launch a connected Truffle Development Environment in truffle-node, it's just the ELA/ETH Test Faucet is either not working or holds secrets we have yet to uncover ..
