@@ -32,7 +32,7 @@ Nevertheless, if you wish to go on to build a full set of nodes with High Availa
 
 `multipass launch --name master-node --mem 3G --disk 15G`
 
-`multipass launch --name database-node --mem 3G --disk 50G`
+`multipass launch --name database-node --mem 4G --disk 50G`
 
 `multipass launch --name blockchains-node --mem 3G --disk 15G`
 
@@ -120,13 +120,9 @@ Then:
 
 `multipass mount /your/repo/host/path/postgres-db-elastos-blockchains database-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains ipfs1-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains blockchains-node:/home/ubuntu/shared`
 
-`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains ipfs2-node:/home/ubuntu/shared`
-
-`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains hive-node:/home/ubuntu/shared`
-
-`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains  carrier-node:/home/ubuntu/shared`
+`multipass mount /your/repo/host/path/postgres-db-elastos-blockchains truffle-node:/home/ubuntu/shared`
 
  IN HOST TERMINAL:
  
@@ -135,6 +131,8 @@ Then:
  `docker pull redis:5.0.4`
 
  `docker pull postgres:10.14`
+ 
+  `docker pull postgrest/postgrest:latest`
  
  .. from the Elastos Develap Binaries, we have examined the output of a Docker subsystem running the following Blockchains, and managed to reconstruct the system as a Kubernetes Deployment.
 
@@ -172,6 +170,8 @@ Then:
 
 `docker tag postgres:10.14 10.184.36.93:32000/postgres:10.14`
 
+`docker tag postgrest/postgrest:latest 10.184.36.93:32000/postgrest/postgrest:registry`
+
 `docker tag cyberrepublic/elastos-mainchain-node:v0.3.7 10.184.36.93:32000/cyberrepublic/elastos-mainchain-node:v0.3.7`
 
 `docker tag cyberrepublic/elastos-sidechain-did-node:v0.1.2 10.184.36.93:32000/cyberrepublic/elastos-sidechain-did-node:v0.1.2`
@@ -183,6 +183,8 @@ Then:
 `docker push 10.184.36.93:32000/redis:5.0.4`
 
 `docker push 10.184.36.93:32000/postgres:10.14`
+
+`docker push 10.184.36.93:32000/postgrest/postgrest:registry`
 
 `docker push 10.184.36.93:32000/cyberrepublic/elastos-mainchain-node:v0.3.7`
 
@@ -244,11 +246,13 @@ Create places for persistent volumes on database-node and allow access:
 
 `sudo chmod 777 /mnt/disk/data-cheirrs-oseer`
 
+_________________________________________________
+
 Still in database-node, start master postgres server:
 
 `microk8s kubectl apply -f statefulset-master.yml`
 
-In master-node:
+In master-node, check pod:
 
 `watch microk8s kubectl get pods`
 
@@ -265,12 +269,22 @@ If errors or excessive delay get messages with:
  Check pods in master node. If all is well:
  
  Database-node:
+ 
+`microk8s kubectl apply -f haskell.yml`
+
+check pods ..
 
 `microk8s kubectl apply -f redis-cheirrs.yml`
 
+check pods ..
+
 `microk8s kubectl apply -f redis-cheirrs-oseer.yml`
 
+check pods ..
+
 `microk8s kubectl apply -f redis-a-horse.yml`
+
+check pods ..
  
  ______________________________________________________________________
  
