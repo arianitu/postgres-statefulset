@@ -448,7 +448,7 @@ you will see there is a nodePort number associated with each Elastos port. The n
 
 The remaining edits required for truffle-config.js are on the latter webpage.
 
-On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. faucet.elaeth.io , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
+On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. https://faucet.elaeth.io/ , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
 
 We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. This means we are connected to the Elastos Blockchains, after running
 
