@@ -281,7 +281,9 @@ If errors or excessive delay get messages with:
  Check pods in master node. If all is well:
  
  Database-node:
- 
+
+`cd /home/ubuntu/shared/path/to/postgres-db-elastos-blockchains`
+
 `microk8s kubectl apply -f haskell.yml`
 
 check pods ..
@@ -400,9 +402,9 @@ In the master-node terminal,
 
 You can edit secret.yml but then you need to alter the redis-xyz.yml's and haskell.yml as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
 
-`microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse`
+`microk8s kubectl delete deployments redis-cheirrs redis-cheirrs-oseer redis-a-horse haskell`
 
-and restart from above. The deployments may be freely created and deleted at this stage as they are not programmed instances of Redis, more placeholders. Likewise with the Haskell webserver, it is an adaptable element which can readily be destroyed and recreated.
+and restart from above. The deployments may be freely created and deleted at this stage as they are not programmed instances of Redis, more placeholders. Likewise with the Haskell webserver, it is an adaptable element which can readily be destroyed and recreated. The Haskell server generates its APIs automatically upon connection via the Haskell Key configuration which allows the server to connect and 'migrate' the schemae, tables, columns, sequences and functions etc directly from the postgres database.
 
 (Track on master-node with `watch microk8s kubectl get pods`)
 
