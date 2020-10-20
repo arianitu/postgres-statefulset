@@ -420,7 +420,7 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 and editing pg_hba.conf to include these addresses with /32 as the CIDR, and on trust basis.
 
-## Please help! ##
+## TRUFFLE & Smart Contracts in Elastos/Ethereum: Please help! ##
 
 The following is experimental:
 
