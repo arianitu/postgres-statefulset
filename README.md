@@ -1,6 +1,5 @@
 
-# As this is forked from Arianitu's github site, the head README.md file applies to building the database only. The README.md for postgres-db-elastos-blockchains had to be placed inside the config folder.
-
+# As this is forked from Arianitu's github site, the head README.md file applies to building the database only. The README.md for postgres-db-elastos-blockchains had to be placed inside the config folder: https://github.com/john-itcsolutions/postgres-db-elastos-blockchains/blob/master/config/README.md.
 
 # postgres-statefulset
 This is an example of using Kubernetes StatefulSets to get a Postgres instance running with replication enabled. This also uses the [standard Postgres container](https://github.com/docker-library/postgres). Blog article [here](https://stacksoft.io/blog/postgres-statefulset/)
