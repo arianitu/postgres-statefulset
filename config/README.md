@@ -10,7 +10,7 @@ You need to develop on docker. ITCSA uses Ubuntu 20.04.
 
 You will not need an Extreme Gaming level of computer for Docker based work without Kubernetes.
 
-See our website at https://www.itcsolutions.com.au/kubernetes-yaml-file-example/ for an older but more visual idea.
+See our website at https://www.itcsolutions.com.au/kubernetes-yaml-file-example/ for an older but more visual idea of this project and others.
 
 Get Docker for Ubuntu: https://docs.docker.com/engine/install/ubuntu/
 
