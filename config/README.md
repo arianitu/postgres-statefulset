@@ -102,6 +102,8 @@ When the database-node has joined, repeat for blockchains-node.
 
 Go ahead and add the truffle-node to the cluster.
 
+(Note: You need to use `micok8s leave` in the terminal of any node you intend to stop, delete and puge with multipass. Also run `microk8s remove-node <node_name>` on the master-node before stopping the target node.)
+
 Recheck microk8s status on every node.
 
 {`sudo snap remove microk8s`, reinstall, enable add-ons (see above) and join again, in case of microk8s not running.}
