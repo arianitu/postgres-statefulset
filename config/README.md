@@ -166,7 +166,7 @@ Then:
 
 `}`
 
-where the 2 Ip Addresses must match your master-node address. (Use `multipass list` on the host)
+where the Ip Address must match your master-node address. (Use `multipass list` on the host)
 
 Then:
 
