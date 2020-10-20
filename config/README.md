@@ -420,6 +420,8 @@ At this stage you should edit /var/lib/postgresql/data/pgdata/pg_hba.conf to all
 
 and editing pg_hba.conf to include these addresses with /32 as the CIDR, and on trust basis.
 
+_______________________________________________________________________
+
 ## TRUFFLE & Smart Contracts in Elastos/Ethereum: Please help! ##
 
 The following is experimental:
@@ -448,7 +450,7 @@ you will see there is a nodePort number associated with each Elastos port. The n
 
 The remaining edits required for truffle-config.js are on the latter webpage.
 
-On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. https://faucet.elaeth.io/ , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ...
+On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. https://faucet.elaeth.io/ , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ... The answer seems to lie behind the configuration of the Test ELA/ETH Blockchain because it requires access to/from the Internet to link with the faucet webservice. That interconnectivity appears to be absent currently.
 
 We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. This means we are connected to the Elastos Blockchains, after running
 
