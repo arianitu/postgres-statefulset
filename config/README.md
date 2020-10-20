@@ -42,7 +42,7 @@ Nevertheless, if you wish to go on to build a full set of nodes with High Availa
 
 `multipass launch --name master-node --mem 3G --disk 15G`
 
-`multipass launch --name database-node --cpu 2 --mem 3G --disk 20G`
+`multipass launch --name database-node --cpus 2 --mem 3G --disk 20G`
 
 `multipass launch --name blockchains-node --mem 3G --disk 20G`
 
