@@ -12,7 +12,9 @@ You will not need an Extreme Gaming level of computer for Docker based work with
 
 See our website at https://www.itcsolutions.com.au/kubernetes-yaml-file-example/ for an older but more visual idea of this project and others.
 
-Get Docker for Ubuntu: https://docs.docker.com/engine/install/ubuntu/
+# Get
+
+Docker for Ubuntu: https://docs.docker.com/engine/install/ubuntu/
 
 Remember to
 
@@ -28,7 +30,7 @@ and
 
 https://developer.elastos.org/elastos_core_services/guides/ethereum_smart_contracts/
 
-# The database schemae for ITCSA's project are private and available only under certain conditions.
+# (The database schemae for ITCSA's project are private and available only under certain conditions.)
 
 Development is easiest in Docker as opposed to Kubernetes.
 
@@ -40,11 +42,11 @@ Nevertheless, if you wish to go on to build a full set of nodes with High Availa
 
 `multipass launch --name master-node --mem 3G --disk 15G`
 
-`multipass launch --name database-node --mem 4G --disk 50G`
+`multipass launch --name database-node --mem 3G --disk 20G`
 
-`multipass launch --name blockchains-node --mem 3G --disk 15G`
+`multipass launch --name blockchains-node --mem 3G --disk 20G`
 
-`multipass launch --name truffle-node --mem 4G --disk 15G`
+`multipass launch --name truffle-node --mem 3G --disk 10G`
 
 Open 4 new terminal tabs.
 
