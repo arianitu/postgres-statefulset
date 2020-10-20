@@ -222,7 +222,7 @@ Generate further secrets from kustomization file:
 
 Create places for persistent volumes on database-node and allow access:
 
-.. you can either;
+.. you can either (you may need to `sudo chmod +x volumes.sh`);
 
 `sudo ./volumes.sh`
 
