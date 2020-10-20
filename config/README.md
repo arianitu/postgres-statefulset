@@ -170,7 +170,7 @@ where the Ip Address must match your master-node address. (Use `multipass list` 
 
 Then:
 
-`sudo systemctl daemon reload`
+`sudo systemctl daemon-reload`
 
 `sudo systemctl restart docker`
 
