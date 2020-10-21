@@ -424,7 +424,7 @@ and editing pg_hba.conf to include these addresses with /32 as the CIDR, and on 
 
 _______________________________________________________________________
 
-## TRUFFLE & Smart Contracts in Elastos/Ethereum: Please help! ##
+## TRUFFLE & Smart Contracts in Elastos/Ethereum: ##
 
 The following is experimental:
 
