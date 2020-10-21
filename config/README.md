@@ -446,13 +446,13 @@ However if you issue (on a second master-node terminal):
 
 `microk8s kubectl get services`
 
-you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. The network_id should be "3", and the host Ip-Address to use is the vm (node) address of the blockchains-node - obtainable from:
+you will see there is a nodePort number associated with each Elastos port. The nodePort number corresponding to Elastos Port Number 21636 should be inserted in the network config for Truffle. This port number alters each time you rebuild the blockchains. The network_id should be "*", and the host Ip-Address to use is the vm (node) address of the blockchains-node - obtainable from:
 
 `multipass list`, run on the Host computer.
 
 The remaining edits required for truffle-config.js are on the latter webpage.
 
-On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. https://faucet.elaeth.io/ , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ... The answer seems to lie behind the configuration of the Test ELA/ETH Blockchain because it requires access to/from the Internet to link with the faucet webservice. That interconnectivity appears to be absent currently.
+On that page is a link to the ELA/ETH "faucet" where we are supposed to obtain Test Ela/Eth. https://faucet.elaeth.io/ , however we found it failed repeatedly and we have zero Test ELA/ETH. :(   ... The answer seems to lie behind the configuration of the Test ELA/ETH Blockchain because it requires access to/from the Internet to link with the faucet webservice. That interconnectivity appears to be absent currently, with Testnet ELA/ETH quoted publicly alongside other published network id's (from other organisations attaching to Ethereum) as "2". However, the current develap binaries result in network id = "3" as default configured value. As the network id's do not match, we are disconnected from the ELA/ETH faucetat this stage.
 
 We did find that we could successfully connect to the Truffle development network (as paupers) with the above nodePort config. This means we are connected to the Elastos Blockchains, after running
 
@@ -464,4 +464,30 @@ We were also able to obtain an Eth Account Address with:
 
 We then inserted that Account Address into the truffle-config.js file as described on the above Elastos webpage.
 
-At the very least this means we have managed to successfully construct a fully connected Kubernetes backend for the Database and Blockchains (based on Fully Replicated Postgresql and the Elastos Develap Binaries) with a Truffle node upon which programming of solidity smart contracts would be able to occur against the Blockchains, given we had some Test ELA/ETH. We have webservers in the form of caching Redis Servers unprogrammed but ready, and a general-purpose Haskell language-based server from the Postgrest project, to use until we have Redis operating. The installation of Database/Blockchains/Servers and Truffle Node is stable and has not fallen over since generation. We are able to launch a connected Truffle Development Environment on the truffle-node, it's just the ELA/ETH Test Faucet is either not working or holds secrets we have yet to uncover ..
+At the very least this means we have managed to successfully construct a fully connected Kubernetes backend for the Database and Blockchains (based on Fully Replicated Postgresql and the Elastos Develap Binaries) with a Truffle node upon which programming of solidity smart contracts would be able to occur against the Blockchains, given we had some Test ELA/ETH. We have webservers in the form of caching Redis Servers unprogrammed but ready, and a general-purpose Haskell language-based server from the Postgrest project, to use until we have Redis operating. The installation of Database/Blockchains/Servers and Truffle Node is fairly stable although it has fallen over once since generation. We are able to launch a connected Truffle Development Environment on the truffle-node, it's just the ELA/ETH Test Faucet is either not working or holds secrets we have yet to uncover .. by design we suspect.
+
+Nevertheless you can continue to develop Ethereum Smart Contracts using a local Ganache/Truffle system on the Host in a directory accessible to the truffle-node.
+
+Install Ganache by googling the name and then !!CHANGE PATH TO SUIT YOURSELF!! 
+
+`mkdir -p path/to/directory/truffle-project && cd path/to/directory/truffle-project` 
+
+on Host.
+
+`sudo apt-get update`
+
+`sudo apt-get install npm`
+
+`npm install -g truffle`
+
+`truffle init`
+
+`nano truffle-config.js`
+
+.. uncomment Development Network section and insert "localhost" as host and 7545 as port with "*" as network-id.
+
+.. save and exit.
+
+You can now run the Ganache starter you would have downloaded earlier.
+
+Congratulatioons you are ready to code and compile solidity smart contracts on your host and transfer them to the truffle-node terminal to run on the local Ethereum Blockchain on Kubernetes. (when the network-id for develap binaries version matches public testnet network-id.)
