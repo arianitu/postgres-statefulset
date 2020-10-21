@@ -478,7 +478,7 @@ on Host.
 
 `sudo apt-get install npm`
 
-`npm install -g truffle`
+`sudo npm install -g truffle solc @truffle/hdwallet-provider`
 
 `truffle init`
 
