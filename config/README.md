@@ -490,4 +490,8 @@ on Host.
 
 You can now run the Ganache starter you would have downloaded earlier.
 
-Congratulations you are ready to code and compile solidity smart contracts on your host and transfer them to the truffle-node terminal to run on the local Ethereum Blockchain on Kubernetes. (when, finally, the network-id for develap binaries version from Cyber-Republic matches published testnet network-id.)
+Then on Host in truffle-project directory:
+
+`truffle console`
+
+Congratulations you are ready to code and compile solidity smart contracts on your host and transfer them to the truffle-node terminal to run on the local Ethereum Blockchain on Kubernetes; (that is, when, finally, the network-id for the latest develap binaries version from Cyber-Republic matches the published testnet network-id.)
