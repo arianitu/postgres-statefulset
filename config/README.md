@@ -98,7 +98,7 @@ On master-node
 
 `microk8s add-node`  ... and copy the join command to the database node.
 
-(Sometimes, the nodes fall over and they require microk8s to be reinstalled. As long as there are 3 nodes running microk8s (even if master-node itself falls over), you have a HA Cluster and you can reinstall microk8s as above on the remaining node and then rejoin to master. If it is master that has fallen, it still needs reinstall of microk8s then join each other node again to the master-node's new cluster. It may also happen that there are fewer than 3 nodes remaining with microk8s running, as few as zero. The procedure then simply needs to be repeated as detailed here. Sometimes (in fact unless you have deleted and purged the database-node) you may find when you reinstall microk8s everywhere and install the stateful sets and pods - applying the yml's - that the postgres database already exists complete with all schemae, tables and users. Using `microk8s kubectl cordon database-node` on master, followed by `microk8s kubectl drain database-node --ignore-daemonsets` can avoid the need to stop, delete and purge the database-node, and retain the database setup in the background.)
+(Sometimes, the nodes fall over and they require microk8s to be reinstalled. As long as there are 3 nodes running microk8s (even if master-node itself falls over), you have a HA Cluster and you can reinstall microk8s as above on the remaining node and then rejoin to master. If it is master that has fallen, it still needs reinstall of microk8s then join each other node again to the master-node's new cluster. It may also happen that there are fewer than 3 nodes remaining with microk8s running, as few as zero. The procedure then simply needs to be repeated as detailed here. Sometimes (in fact unless you have deleted and purged the database-node) you may find when you reinstall microk8s everywhere and install the stateful sets and pods - applying the yml's - that the postgres database already exists complete with all schemae, tables and users. Using `microk8s kubectl cordon database-node` on master, followed by `microk8s kubectl drain database-node --ignore-daemonsets` then `microk8s kubectl uncordon database-node` can avoid the need to stop, delete and purge the database-node, and retain the database setup in the background.)
 
 When the database-node has joined, repeat for blockchains-node.
 
@@ -146,7 +146,7 @@ Then:
 
  `docker pull postgres:10.14`
  
-  `docker pull postgrest/postgrest:latest`
+ `docker pull postgrest/postgrest:latest`
  
  .. by running the Elastos Develap Binaries, we have examined the output of a Docker subsystem running the following Blockchains, and managed to reconstruct the system as a Kubernetes Deployment.
 
@@ -409,6 +409,10 @@ In the master-node terminal,
 `cd shared/path/to/postgres-db-elastos-blockchains `
 
 `microk8s kubectl apply -f elastos-develap.yml`
+
+..check all is well, or correct errors with messages in `microk8s kubectl describe pods`
+
+`watch microk8s kubectl get pods`
 
 You can edit secret.yml but then you need to alter the redis-xyz.yml's and haskell.yml as the hash for postgres key will change. So you would have to find the hashes in the redis yml files and alter to match newly created key - ie with `microk8s kubectl apply -k .`, and then:
 
