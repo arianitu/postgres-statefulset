@@ -82,7 +82,7 @@ In first (within master-node):
 
 `su - $USER`
 
-`microk8s enable ambassador dashboard dns ha-cluster metrics-server registry storage`
+`microk8s enable dashboard dns ha-cluster ingress metrics-server registry storage`
 
 Repeat above 7 commands in each of database-node, blockchains-node, truffle-node.
 
