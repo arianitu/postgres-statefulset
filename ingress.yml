@@ -73,6 +73,13 @@ spec:
   - host: "database-node"
   - http:
       paths:
+      - path: /haskell
+        pathType: Prefix
+        backend:
+          service:
+            name: haskell
+            port:
+              number: 3000
       - path: /redis-cheirrs
         pathType: Prefix
         backend:
