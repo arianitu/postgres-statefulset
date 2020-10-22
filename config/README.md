@@ -496,4 +496,4 @@ Then on Host in truffle-project directory:
 
 Congratulations you are ready to code and compile solidity smart contracts on your host and transfer them to the truffle-node terminal to run on the local Ethereum Blockchain on Kubernetes; (that is, when, finally, the network-id for the latest develap binaries version from Cyber-Republic matches the published testnet network-id.)
 
-Note that the truffle-config.js file would have to be re-edited to allow connection to an Ethereum Sidechain (from truffle-node) in the future which is connected (with nework-id = "2") as indicated in the truffle-node configuration previously, as opposed to the configuration performed for the ganache--based work on Host.
+Note that the truffle-config.js file would have to be re-edited to allow connection to the Elastos Ethereum Sidechain (from truffle-node in Kubernetes) in the future which is connected (with nework-id = "2") as indicated in the truffle-node configuration previously, as opposed to the current configuration performed for the ganache--based work on Host.
