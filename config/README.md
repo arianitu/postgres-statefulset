@@ -484,7 +484,7 @@ on Host.
 
 `nano truffle-config.js`
 
-.. uncomment Development Network section and insert "localhost" as host and 7545 as port with "*" as network-id.
+.. uncomment Development Network section and insert `"localhost"` as host and `7545` as port with `"*"` as network-id.
 
 .. save and exit.
 
