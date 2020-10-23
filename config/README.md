@@ -472,7 +472,7 @@ We then inserted that Account Address into the truffle-config.js file as describ
 
 At the very least this means we have managed to successfully construct a fully connected Kubernetes backend for the Database and Blockchains (based on Fully Replicated Postgresql and the Elastos Develap Binaries) with a Truffle node upon which programming of solidity smart contracts would be able to occur against the Blockchains, given we had some Test ELA/ETH. We have webservers in the form of caching Redis Servers unprogrammed but ready, and a general-purpose Haskell language-based server from the Postgrest project, to use until we have Redis operating. The installation of Database/Blockchains/Servers and Truffle Node is fairly stable although it has fallen over once since generation. We are able to launch a connected Truffle Development Environment on the truffle-node, it's just the ELA/ETH Test Faucet is either not working or holds secrets we have yet to uncover .. by design we suspect.
 
-Nevertheless you can continue to develop Ethereum Smart Contracts using a local Ganache/Truffle system on the Host in a directory accessible to the truffle-node.
+Nevertheless you can continue to develop Ethereum Smart Contracts using a local Ganache/Truffle system on the Host in a directory accessible to the truffle-node at truffle-node: ~/shared.
 
 Install Ganache by googling the name and then !!CHANGE PATH TO SUIT YOURSELF!! 
 
